@@ -6,7 +6,7 @@ Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알�
 
 [시연영상 링크](https://example.com)  
 
-## 사용 기술
+## 개발
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
   <img src="https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" style="max-height: 40px;">
@@ -15,6 +15,14 @@ Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알�
   <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript" style="max-height: 40px;">
   <img src="https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++" style="max-height: 40px;">
 </div>
+
+## 사용 기술
+
+- **Arduino**: 하드웨어 제어를 위한 기본 플랫폼.
+- **Servo 모터**: 알약을 분리하는 역할을 수행합니다.
+- **Bluetooth 모듈**: 모바일 앱과 Arduino 간의 통신을 담당합니다.
+- **모바일 앱**: 사용자 인터페이스 및 설정 관리.
+
 
 ## 프로젝트 목적
 
