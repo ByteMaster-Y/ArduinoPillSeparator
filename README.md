@@ -67,27 +67,27 @@ Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알�
 
 우리 프로젝트를 함께하는 팀원들을 소개합니다:
 
-### ByteMaster
+**ByteMaster**
 
 - **이메일**: [issacyese5566@gmail.com](mailto:issacyese5566@gmail.com)
 - **역할**: 프로젝트 리더 & 모바일 앱 개발
 - **소개**: 이 프로젝트의 전반적인 기술 설계를 담당하고 있습니다.
 
-### latteroong 
+**latteroong**
 
 - **이메일**: [iop0512@naver.com](mailto:iop0512@naver.com)
 - **역할**: 모바일 앱 개발
 - **소개**: 이 프로젝트의 모바일 프로그래밍을 담당하고 있습니다.
 
-### KDH0908 
+**KDH0908** 
 
 - **이메일**: [fusel010203@gmail.com](mailto:fusel010203@gmail.com)
 - **역할**: 아두이노 설계
 - **소개**: 이 프로젝트의 하드웨어 설계를 담당하고 있습니다.
 
-### ljhjane
+**ljhjane**
 
-- **이메일**: [ljhjane@example.com](mailto:ljhjane@example.com) *(이메일 주소가 비어있어 임시로 이메일을 추가했습니다. 실제 이메일로 교체해 주세요.)*
+- **이메일**: [ljhjane@example.com](mailto:ljhjane@example.com) 
 - **역할**: 아두이노 설계
 - **소개**: 이 프로젝트의 하드웨어 설계를 담당하고 있습니다.
 
