@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pharmacy Tour Team</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="/assets/css/mdb.min.css" />
+    <!--indexCSS-->
+    <link rel="stylesheet" href="/assets/css/alarm.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="timer-display">00:00:00</div>
+      <div class="container">
+        <div class="inputs">
+          <input
+            type="number"
+            id="hourInput"
+            placeholder="00"
+            min="0"
+            max="23"
+          />
+          <input
+            type="number"
+            id="minuteInput"
+            placeholder="00"
+            min="0"
+            max="59"
+          />
+        </div>
+        <button id="set">알람 추가하기</button>
+        <div class="activeAlarms"></div>
+      </div>
+    </div>
+    <!-- Script -->
+    <script src="/assets/js/alarm.js"></script>
+  </body>
+</html>
