@@ -3,6 +3,21 @@ const express = require('express');
 const nunjucks = require('nunjucks');
 //  Nunjucks 모듈을 가져옵니다. Nunjucks는 Jinja2에서 영감을 받은 JavaScript 템플릿 엔진으로, 서버 측에서 HTML을 렌더링하는 데 사용됩니다.
 const app = express();
+
+const { SerialPort } = require('serialport');   // 아두이노와 시리얼 통신을 위한 패키지
+const COM = 'COM6';  //  여기에 아두이노가 연결된 포트 번호를 입력
+// const arduino = new SerialPort({
+//     path: COM,
+//     baudRate: 9600,
+//     dataBits: 8,
+//     parity: 'none',
+//     stopBits: 1,
+//     flowControl: false
+// });
+// arduino.on('open', function() {
+//     console.log("오픈 시리얼 커뮤니케이션");
+// });
+
 app.set('view engine', 'html');
 nunjucks.configure('views', {
     express: app,
