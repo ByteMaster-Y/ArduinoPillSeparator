@@ -102,11 +102,26 @@ minuteInput.addEventListener("input", () => {
 
 // 알람 div 생성 함수
 const createAlarm = (alarmObj) => {
-  const { id, alarmHour, alarmMinute, alarmName } = alarmObj; // 알람 객체의 키
+  const { id, alarmHour, alarmMinute, alarmName, alarmDays } = alarmObj; // 알람 객체의 키
+
   let alarmDiv = document.createElement("div"); // 새로운 div 생성
   alarmDiv.classList.add("alarm"); // 클래스 추가
   alarmDiv.setAttribute("data-id", id); // 데이터 속성 설정
-  alarmDiv.innerHTML = `<span>${alarmName}<br>${alarmHour}:${alarmMinute}</span>`; // 알람 시간과 이름 표시
+
+  // 요일 배열 (전체 요일)
+  const allDays = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
+
+  // 모든 요일이 선택되면 "매일"로 표시, 그렇지 않으면 선택된 요일 표시
+  let daysText;
+  if (alarmDays.length === allDays.length && allDays.every(day => alarmDays.includes(day))) {
+      daysText = '매일'; // 모든 요일이 선택된 경우
+  } else if (alarmDays.length > 0) {
+      daysText = `(<span style="font-size: 0.8em;">${alarmDays.join(', ')}</span>)`; // 선택된 요일만 표시
+  } else {
+      daysText = ''; // 요일이 선택되지 않은 경우
+  }
+
+  alarmDiv.innerHTML = `<span>${alarmName}<br>${alarmHour}:${alarmMinute}<br>${daysText}</span>`; // 알람 시간과 요일 표시
 
   // 체크박스 생성
   let checkbox = document.createElement("input");
@@ -123,6 +138,7 @@ const createAlarm = (alarmObj) => {
   activeAlarms.appendChild(alarmDiv); // 활성 알람에 추가
 };
 
+
 // 알람 설정 함수
 const setAlarmFunction = () => {
   let hour = parseInt(hourInput.value); // 입력된 시간
@@ -134,6 +150,8 @@ const setAlarmFunction = () => {
     minute = 0;
   }
   const alarmName = document.getElementById('alarmNameInput').value; // 알람 이름 입력값
+  const selectedDays = Array.from(document.getElementById('alarmDays').selectedOptions)
+                            .map(option => option.text); // 선택된 요일 가져오기
 
   if (hour < 0 || hour > 23 || minute < 0 || minute > 59 || !alarmName) {
       alert("올바른 시간을 입력하세요."); // 유효성 검사
@@ -146,6 +164,7 @@ const setAlarmFunction = () => {
       alarmHour: appendZero(hour),
       alarmMinute: appendZero(minute),
       alarmName: alarmName, // 알람 이름 추가
+      alarmDays: selectedDays,  // 요일 정보 추가
       isActive: true,
   };
 
