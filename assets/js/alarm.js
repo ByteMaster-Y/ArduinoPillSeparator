@@ -125,11 +125,17 @@ const createAlarm = (alarmObj) => {
 
 // 알람 설정 함수
 const setAlarmFunction = () => {
-  const hour = parseInt(hourInput.value); // 입력된 시간
-  const minute = parseInt(minuteInput.value); // 입력된 분
+  let hour = parseInt(hourInput.value); // 입력된 시간
+  if (isNaN(hour)) {
+    hour = 0;
+  }
+  let minute = parseInt(minuteInput.value); // 입력된 분
+  if (isNaN(minute)) {
+    minute = 0;
+  }
   const alarmName = document.getElementById('alarmNameInput').value; // 알람 이름 입력값
 
-  if (isNaN(hour) || isNaN(minute) || hour < 0 || hour > 23 || minute < 0 || minute > 59 || !alarmName) {
+  if (hour < 0 || hour > 23 || minute < 0 || minute > 59 || !alarmName) {
       alert("올바른 시간을 입력하세요."); // 유효성 검사
       return;
   }
