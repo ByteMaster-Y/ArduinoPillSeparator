@@ -7,10 +7,12 @@
     height: 100vh; /* Full height for mobile */
     margin-top: 0; /* No margin for mobile */
     background-image: url(/assets/img/main.gif);
+    
 }
 
 .mask {
-    background-color: rgba(0, 0, 0, 0.7);
+    /* background-color: rgba(0, 0, 0, 0.7); */
+   
 }
 
 .text-white {
