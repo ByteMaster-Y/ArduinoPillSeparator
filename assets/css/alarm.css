@@ -1,0 +1,122 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  /* background: linear-gradient(45deg, #007bff, #27ae60); */
+  background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* 상단에 고정 */
+  min-height: 100vh;
+  margin: 0;
+}
+
+.hide {
+  display: none;
+}
+
+.wrapper {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 31.25em;
+  padding: 3.12em 5em;
+  position: relative;
+  border-radius: 0.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  margin-top: 1em; /* 상단 여백 */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가운데 정렬 */
+}
+
+.timer-display {
+  font-size: 2.18em;
+  text-align: center;
+  font-family: "Roboto Mono", monospace;
+  color: #000000;
+  margin-bottom: 2em;
+}
+
+/* .inputs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  margin-top: 2em;
+}
+
+.inputs input {
+  width: 2.8em;
+  font-size: 1.3em;
+  border: 1px solid #000000;
+  border-radius: 0.3em;
+  padding: 0.4em 0.2em;
+} */
+
+#set {
+  position: absolute;
+  top: 1em; /* wrapper 안쪽으로 */
+  right: 1em; /* wrapper 안쪽으로 */
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.alarm {
+  display: grid;
+  grid-template-columns: 8fr 2fr 2fr;
+  gap: 1em;
+  margin-top: 1.5em;
+  align-items: center;
+  border-bottom: 1px solid #898f9b;
+  padding-bottom: 0.6em;
+  color: #000000;
+}
+
+.alarm input[type="checkbox"] {
+  appearance: none;
+  height: 2em;
+  width: 3.75em;
+  background-color: #e2e2ec;
+  border-radius: 1.25em;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+
+.alarm input[type="checkbox"]:before {
+  position: absolute;
+  content: "";
+  background-color: #757683;
+  height: 1.43em;
+  width: 1.43em;
+  border-radius: 50%;
+  top: 0.25em;
+  left: 0.25em;
+}
+
+.alarm input[type="checkbox"]:checked {
+  background-color: #d2e2ff;
+}
+
+.alarm input[type="checkbox"]:checked:before {
+  background-color: #377dff;
+  left: 2em;
+}
+
+.deleteButton {
+  background-color: transparent;
+  font-size: 1.5em;
+  color: #377dff;
+  border: none;
+  cursor: pointer;
+}
+
+/* ----------------------모달 스타일---------------------- */
