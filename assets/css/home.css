@@ -6,18 +6,12 @@
 #intro {
     height: 100vh; /* Full height for mobile */
     margin-top: 0; /* No margin for mobile */
-    background-image: url(/assets/img/main.gif);
+    /* background-image: url(/assets/img/main.gif); */
+    /* background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%); */
     
 }
 
-.mask {
-    /* background-color: rgba(0, 0, 0, 0.7); */
-   
-}
 
-.text-white {
-    padding: 20px;
-}
 
 .btn {
     width: 100%; /* Full width buttons */

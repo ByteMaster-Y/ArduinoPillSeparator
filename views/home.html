@@ -13,24 +13,62 @@
     <link rel="stylesheet" href="/assets/css/mdb.min.css" />
     <!--indexCSS-->
     <link rel="stylesheet" href="/assets/css/home.css" />
+    <!--StartButtonCSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700&amp;display=swap'><link rel="stylesheet" href="/assets/buttonStyle.css">
+    <style>
+        .ios-15 .wrapper span {
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        color: #fff; /* 텍스트 색상을 흰색으로 설정 */
+    }
+
+    body {
+        background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    }
+
+    </style>
 </head>
 <body>
     <header>
+    <!-- 새로운 버튼 배경화면-->
+        <button class="ios-15">
+            <div class="wrapper">
+                <a href="/alarm" role="button"><span>Start APP</span></a>
+                <div class="circle circle-12"></div>
+                <div class="circle circle-11"></div>
+                <div class="circle circle-10"></div>
+                <div class="circle circle-9"></div>
+                <div class="circle circle-8"></div>
+                <div class="circle circle-7"></div>
+                <div class="circle circle-6"></div>
+                <div class="circle circle-5"></div>
+                <div class="circle circle-4"></div>
+                <div class="circle circle-3"></div>
+                <div class="circle circle-2"></div>
+                <div class="circle circle-1"></div>
+            </div>
+        </button>
+
+
     <!--header이자 main-->
         <!-- Background image -->
-        <div id="intro" class="bg-image text-center shadow-1-strong" style="background-image: url(/assets/img/main.gif);">
+        <!-- <div id="intro" class="bg-image text-center shadow-1-strong" >
             <div class="mask">
                 <div class="d-flex justify-content-center align-items-center h-100">
                     <div class="text-white" data-mdb-theme="dark">
                         <h1 class="mb-3" font>Coming Soon!</h1>
                         <a class="btn btn-outline-light" href="/alarm" role="button" >Start App</a>
                     </div>
+                    
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Background image -->
     <!--header이자 main-->
     </header>
+
 
     <!-- Footer -->
     <footer class="bg-light text-lg-start">
