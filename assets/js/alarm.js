@@ -138,7 +138,16 @@ const createAlarm = (alarmObj) => {
   deleteButton.classList.add("deleteButton");
   deleteButton.addEventListener("click", (e) => deleteAlarm(e));
   alarmDiv.appendChild(deleteButton);
-  activeAlarms.appendChild(alarmDiv);
+
+  // 모달 버튼을 누르면은 기존 세팅되었던 모달이 다시 생성되고 후에 수정되면은 화면상에 반영
+
+  // let modalButton = document.createElement("button");
+  // modalButton.innerHTML = '<i class="fas fa-angles-right"></i>';
+
+  // modalButton.classList.add("modalButton");
+  // modalButton.addEventListener("click", (e) => modalAlarm(e));
+  // alarmDiv.appendChild(modalButton);
+
   alarmDiv.appendChild(checkbox); // div에 체크박스 추가
   activeAlarms.appendChild(alarmDiv); // 활성 알람에 추가
 };
@@ -213,3 +222,5 @@ const deleteAlarm = (e) => {
     alarmsArray.splice(index, 1);
   }
 };
+
+
