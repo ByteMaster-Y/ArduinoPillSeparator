@@ -12,10 +12,30 @@ updateCurrentTime(); // 페이지 로드 시 한 번 호출
 const modalElement = document.getElementById('exampleModal');
 const modalInstance = new mdb.Modal(modalElement);  // 모달 인스턴스를 수동으로 초기화
 
-document.getElementById('confirm').addEventListener('click', () => {
-  alert('알람 설정이 완료되었습니다.');
+// 확인 버튼 이벤트 핸들러 함수
+function confirmSpanClickHandler() {
+  console.log('확인 버튼이 클릭되었습니다.'); // 로그 출력
+  alert('알람 설정이 완료되었습니다.'); // 추가 알림
   modalInstance.hide();  // 모달 닫기
+}
+
+function confirmAddClickHandler() {
+  console.log('확인 버튼이 클릭되었습니다.'); // 로그 출력
   setAlarmFunction(); // 알람 설정 함수 호출
+  modalInstance.hide();  // 모달 닫기
+}
+
+const addAlarmButton = document.getElementById("set");
+addAlarmButton.addEventListener('click', () => {
+  modalInstance.show(); // 모달 열기
+
+  // 기존의 확인 버튼 이벤트 리스너 제거
+  const confirmButton = modalElement.querySelector('#confirm');
+  confirmButton.removeEventListener('click', confirmAddClickHandler);
+  confirmButton.removeEventListener('click', confirmSpanClickHandler);
+
+  // 새로운 확인 버튼 이벤트 추가
+  confirmButton.addEventListener('click', confirmAddClickHandler);
 });
 
 // 요일 설정 로직 
@@ -40,12 +60,15 @@ document.getElementById('confirmDaysButton').addEventListener('click', function(
 
 // 초기 참조 설정
 let timerRef = document.querySelector(".timer-display"); // 타이머 디스플레이
+const alarmNameInput = document.getElementById("alarmNameInput"); // 알람 이름 입력 필드
 const hourInput = document.getElementById("hourInput"); // 시간 입력 필드
 const minuteInput = document.getElementById("minuteInput"); // 분 입력 필드
 const activeAlarms = document.querySelector(".activeAlarms"); // 활성 알람 표시 구역
 const setAlarm = document.getElementById("set"); // 알람 설정 버튼
 let alarmsArray = []; // 알람 객체를 저장할 배열
 let alarmIndex = 0; // 알람 인덱스
+// 요일 배열 (전체 요일)
+const allDays = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
 
 // 한 자리 숫자 앞에 0 추가
 const appendZero = (value) => (value < 10 ? "0" + value : value);
@@ -108,9 +131,6 @@ const createAlarm = (alarmObj) => {
   alarmDiv.classList.add("alarm"); // 클래스 추가
   alarmDiv.setAttribute("data-id", id); // 데이터 속성 설정
 
-  // 요일 배열 (전체 요일)
-  const allDays = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
-
   // 모든 요일이 선택되면 "매일"로 표시, 그렇지 않으면 선택된 요일 표시
   let daysText;
   if (alarmDays.length === allDays.length && allDays.every(day => alarmDays.includes(day))) {
@@ -121,8 +141,7 @@ const createAlarm = (alarmObj) => {
       daysText = ''; // 요일이 선택되지 않은 경우
   }
 
-  alarmDiv.innerHTML = `<span>${alarmName}<br>${alarmHour}:${alarmMinute}<br>${daysText}</span>`; // 알람 시간과 요일 표시
-
+  alarmDiv.innerHTML = `<span class="span">${alarmName}<br>${alarmHour}:${alarmMinute}<br>${daysText}</span>`; // 알람 시간과 요일 표시
   // 체크박스 생성
   let checkbox = document.createElement("input");
   checkbox.setAttribute("type", "checkbox"); // 체크박스 타입 설정
@@ -139,19 +158,54 @@ const createAlarm = (alarmObj) => {
   deleteButton.addEventListener("click", (e) => deleteAlarm(e));
   alarmDiv.appendChild(deleteButton);
 
-  // 모달 버튼을 누르면은 기존 세팅되었던 모달이 다시 생성되고 후에 수정되면은 화면상에 반영
-
-  // let modalButton = document.createElement("button");
-  // modalButton.innerHTML = '<i class="fas fa-angles-right"></i>';
-
-  // modalButton.classList.add("modalButton");
-  // modalButton.addEventListener("click", (e) => modalAlarm(e));
-  // alarmDiv.appendChild(modalButton);
-
   alarmDiv.appendChild(checkbox); // div에 체크박스 추가
   activeAlarms.appendChild(alarmDiv); // 활성 알람에 추가
+
+  const spans = document.querySelectorAll(".span");
+  const closeButton = modalElement.querySelector('#dismiss');
+  closeButton.addEventListener('click', () => {
+    modalInstance.hide();
+  });
+  
+  // 각 span 요소에 클릭 이벤트 추가
+  spans.forEach(span => {
+    span.addEventListener("click", () => {
+        const parentDiv = span.parentElement; 
+        const dataId = parentDiv.dataset.id;
+        console.log(alarmsArray[dataId]);
+        alarmNameInput.value = alarmsArray[dataId].alarmName;
+        hourInput.value = alarmsArray[dataId].alarmHour;
+        minuteInput.value = alarmsArray[dataId].alarmMinute;
+        modalInstance.show(); // 모달 열기
+        const confirmButton = modalElement.querySelector('#confirm');
+        confirmButton.removeEventListener('click', confirmAddClickHandler);
+        confirmButton.removeEventListener('click', confirmSpanClickHandler);
+        confirmButton.onclick = () => {
+            alert('알람 수정이 완료되었습니다.'); // 추가 알림
+            alarmsArray[dataId].alarmName = alarmNameInput.value;
+            alarmsArray[dataId].alarmHour = hourInput.value;
+            alarmsArray[dataId].alarmMinute = minuteInput.value;
+            modifyAlarm(span, alarmsArray[dataId]);
+            modalInstance.hide();  // 모달 닫기
+        };
+    });
+  });
+
 };
 
+function modifyAlarm(span, alarmObj) {
+  let daysText;
+  if (alarmObj.alarmDays.length === allDays.length && allDays.every(day => alarmObj.alarmDays.includes(day))) {
+      daysText = '매일'; // 모든 요일이 선택된 경우
+  } else if (alarmObj.alarmDays.length > 0) {
+      daysText = `(<span style="font-size: 0.8em;">${alarmDays.join(', ')}</span>)`; // 선택된 요일만 표시
+  } else {
+      daysText = ''; // 요일이 선택되지 않은 경우
+  }
+  span.innerHTML = `${alarmObj.alarmName}<br>${alarmObj.alarmHour}:${alarmObj.alarmMinute}<br>${daysText}`; // 알람 시간과 요일 표시
+  // 체크박스 생성
+  console.log(span);
+};
 
 // 알람 설정 함수
 const setAlarmFunction = () => {
@@ -184,6 +238,7 @@ const setAlarmFunction = () => {
 
   alarmsArray.push(alarmObj); // 배열에 추가
   createAlarm(alarmObj); // 알람 표시 생성
+  alarmNameInput.value = "";  // 입력 필드 초기화
   hourInput.value = ""; // 입력 필드 초기화
   minuteInput.value = ""; // 입력 필드 초기화
   modalInstance.hide(); // 모달 닫기
