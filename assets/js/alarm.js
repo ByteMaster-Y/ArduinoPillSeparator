@@ -13,12 +13,13 @@ const modalElement = document.getElementById('exampleModal');
 const modalInstance = new mdb.Modal(modalElement);  // 모달 인스턴스를 수동으로 초기화
 
 // 확인 버튼 이벤트 핸들러 함수
-function confirmSpanClickHandler(span, alarm) {
+function confirmSpanClickHandler(dataId, span, alarm) {
   alert('알람 수정이 완료되었습니다.'); // 추가 알림
   alarm.alarmName = alarmNameInput.value;
   alarm.alarmHour = hourInput.value;
   alarm.alarmMinute = minuteInput.value;
   modifyAlarm(span, alarm);
+  updateAlarmById(dataId, alarm)
   modalInstance.hide();  // 모달 닫기
 }
 
@@ -190,7 +191,7 @@ const createAlarm = (alarmObj) => {
         confirmButton.removeEventListener('click', confirmAddClickHandler);
         confirmButton.removeEventListener('click', handleConfirmClick);
         handleConfirmClick = () => {
-          confirmSpanClickHandler(span, alarm);
+          confirmSpanClickHandler(dataId, span, alarm);
         };
         // 새로운 이벤트 리스너 추가
         confirmButton.addEventListener('click', handleConfirmClick);
@@ -259,14 +260,28 @@ const setAlarmFunction = () => {
 const getAlarmById = (id) => {
   const alarm = alarmsArray.find(alarm => alarm.id == id);
   if (alarm) {
-      return {
-          alarmName: alarm.alarmName,
-          alarmHour: alarm.alarmHour,
-          alarmMinute: alarm.alarmMinute,
-          alarmDays: alarm.alarmDays, // 필요한 다른 속성도 추가
-      };
+    return {
+      alarmName: alarm.alarmName,
+      alarmHour: alarm.alarmHour,
+      alarmMinute: alarm.alarmMinute,
+      alarmDays: alarm.alarmDays, // 필요한 다른 속성도 추가
+    };
   } else {
-      return null; // 알람을 찾지 못한 경우
+    return null; // 알람을 찾지 못한 경우
+  }
+};
+
+const updateAlarmById = (id, updatedAlarm) => {
+  const alarmIndex = alarmsArray.findIndex(alarm => alarm.id == id);
+
+  if (alarmIndex !== -1) {
+    // 알람이 존재하는 경우, 수정된 값을 업데이트
+    alarmsArray[alarmIndex] = {
+      ...alarmsArray[alarmIndex],
+      ...updatedAlarm, // 수정된 속성으로 기존 알람을 업데이트
+    };
+  } else {
+    console.log("해당 알람 객체 없음");
   }
 };
 
