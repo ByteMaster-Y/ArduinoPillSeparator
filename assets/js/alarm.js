@@ -13,26 +13,33 @@ const modalElement = document.getElementById('exampleModal');
 const modalInstance = new mdb.Modal(modalElement);  // 모달 인스턴스를 수동으로 초기화
 
 // 확인 버튼 이벤트 핸들러 함수
-function confirmSpanClickHandler() {
-  console.log('확인 버튼이 클릭되었습니다.'); // 로그 출력
-  alert('알람 설정이 완료되었습니다.'); // 추가 알림
+function confirmSpanClickHandler(span, alarm) {
+  alert('알람 수정이 완료되었습니다.'); // 추가 알림
+  alarm.alarmName = alarmNameInput.value;
+  alarm.alarmHour = hourInput.value;
+  alarm.alarmMinute = minuteInput.value;
+  modifyAlarm(span, alarm);
   modalInstance.hide();  // 모달 닫기
 }
 
 function confirmAddClickHandler() {
-  console.log('확인 버튼이 클릭되었습니다.'); // 로그 출력
   setAlarmFunction(); // 알람 설정 함수 호출
   modalInstance.hide();  // 모달 닫기
 }
 
+let handleConfirmClick;
+
 const addAlarmButton = document.getElementById("set");
 addAlarmButton.addEventListener('click', () => {
   modalInstance.show(); // 모달 열기
+  alarmNameInput.value = ''; // 입력 필드 초기화
+  hourInput.value = ''; // 입력 필드 초기화
+  minuteInput.value = ''; // 입력 필드 초기화
 
   // 기존의 확인 버튼 이벤트 리스너 제거
   const confirmButton = modalElement.querySelector('#confirm');
   confirmButton.removeEventListener('click', confirmAddClickHandler);
-  confirmButton.removeEventListener('click', confirmSpanClickHandler);
+  confirmButton.removeEventListener('click', handleConfirmClick);
 
   // 새로운 확인 버튼 이벤트 추가
   confirmButton.addEventListener('click', confirmAddClickHandler);
@@ -168,29 +175,33 @@ const createAlarm = (alarmObj) => {
   });
   
   // 각 span 요소에 클릭 이벤트 추가
-  spans.forEach(span => {
-    span.addEventListener("click", () => {
+  spans.forEach((span) => {
+    if (!span.dataset.clicked) {
+      span.addEventListener("click", () => {
         const parentDiv = span.parentElement; 
         const dataId = parentDiv.dataset.id;
-        console.log(alarmsArray[dataId]);
-        alarmNameInput.value = alarmsArray[dataId].alarmName;
-        hourInput.value = alarmsArray[dataId].alarmHour;
-        minuteInput.value = alarmsArray[dataId].alarmMinute;
+        const alarm = getAlarmById(dataId);
+        console.log(alarm);
+        alarmNameInput.value = alarm.alarmName;
+        hourInput.value = alarm.alarmHour;
+        minuteInput.value = alarm.alarmMinute;
         modalInstance.show(); // 모달 열기
         const confirmButton = modalElement.querySelector('#confirm');
         confirmButton.removeEventListener('click', confirmAddClickHandler);
-        confirmButton.removeEventListener('click', confirmSpanClickHandler);
-        confirmButton.onclick = () => {
-            alert('알람 수정이 완료되었습니다.'); // 추가 알림
-            alarmsArray[dataId].alarmName = alarmNameInput.value;
-            alarmsArray[dataId].alarmHour = hourInput.value;
-            alarmsArray[dataId].alarmMinute = minuteInput.value;
-            modifyAlarm(span, alarmsArray[dataId]);
-            modalInstance.hide();  // 모달 닫기
+        confirmButton.removeEventListener('click', handleConfirmClick);
+        handleConfirmClick = () => {
+          confirmSpanClickHandler(span, alarm);
         };
-    });
-  });
+        // 새로운 이벤트 리스너 추가
+        confirmButton.addEventListener('click', handleConfirmClick);
 
+      });
+
+      // 클릭 이벤트가 추가되었음을 표시
+      span.dataset.clicked = "true";
+    }
+  });
+  
 };
 
 function modifyAlarm(span, alarmObj) {
@@ -244,6 +255,21 @@ const setAlarmFunction = () => {
   modalInstance.hide(); // 모달 닫기
 };
 
+// 알람 찾기 함수
+const getAlarmById = (id) => {
+  const alarm = alarmsArray.find(alarm => alarm.id == id);
+  if (alarm) {
+      return {
+          alarmName: alarm.alarmName,
+          alarmHour: alarm.alarmHour,
+          alarmMinute: alarm.alarmMinute,
+          alarmDays: alarm.alarmDays, // 필요한 다른 속성도 추가
+      };
+  } else {
+      return null; // 알람을 찾지 못한 경우
+  }
+};
+
 // 알람 시작 함수
 const startAlarm = (event) => {
   const alarmId = event.target.closest(".alarm").getAttribute("data-id"); // 알람 ID 가져오기
@@ -271,11 +297,9 @@ setInterval(displayTimer, 1000); // 1초마다 호출
 //delete alarm
 const deleteAlarm = (e) => {
   let searchId = e.target.parentElement.parentElement.getAttribute("data-id");
-  let [exists, obj, index] = searchObject("id", searchId);
+  let [exists] = searchObject("id", searchId);
   if (exists) {
     e.target.parentElement.parentElement.remove();
-    alarmsArray.splice(index, 1);
+    alarmsArray = alarmsArray.filter(alarm => alarm.id !== searchId);
   }
 };
-
-
