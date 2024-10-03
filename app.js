@@ -5,7 +5,7 @@ const nunjucks = require('nunjucks');
 const app = express();
 
 const { SerialPort } = require('serialport');   // 아두이노와 시리얼 통신을 위한 패키지
-const COM = 'COM6';  //  여기에 아두이노가 연결된 포트 번호를 입력
+// const COM = 'COM4';  //  여기에 아두이노가 연결된 포트 번호를 입력
 // const arduino = new SerialPort({
 //     path: COM,
 //     baudRate: 9600,
@@ -16,6 +16,9 @@ const COM = 'COM6';  //  여기에 아두이노가 연결된 포트 번호를 �
 // });
 // arduino.on('open', function() {
 //     console.log("오픈 시리얼 커뮤니케이션");
+//     arduino.on('data', function(data) {
+//         console.log(data);
+//     });
 // });
 
 app.set('view engine', 'html');
