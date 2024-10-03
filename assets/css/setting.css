@@ -1,0 +1,52 @@
+@font-face {
+font-family: 'TTLaundryGothicB';
+src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2') format('woff2');
+font-weight: 700;
+font-style: normal;
+}
+
+@font-face {
+font-family: "bw";
+src: url("https://robindelaporte.fr/codepen/play/BwModelicaSS01-ExtraBold.woff") format("woff");
+}
+  
+
+body {
+    background-color: rgb(104, 174, 238); /* 명확하게 배경색 설정 */
+    font-family: 'TTLaundryGothicB', 'bw', sans-serif; /* 기본 폰트로 TTLaundryGothicB 설정 */
+}
+
+/* Custom styles for mobile */
+ 
+#intro {
+    height: 100vh; /* Full height for mobile */
+    margin-top: 0; /* No margin for mobile */
+}
+
+header {
+    display: flex; /* Flexbox 사용 */
+    flex-direction: column; /* 버튼들이 세로로 정렬되도록 설정 */
+    align-items: center; /* 버튼을 가운데 정렬 */
+    gap: 20px; /* 버튼 간의 간격 설정 */
+    margin-top: 20px; /* 상단 여백 */
+}
+
+.btn {
+    width: 100%; /* 버튼의 가로 길이를 100%로 설정 */
+    max-width: 300px; /* 버튼의 최대 너비 설정 (원하는 대로 조정 가능) */
+    padding: 15px; /* 버튼 내부 여백을 늘려서 버튼 크기 증가 */
+    font-size: 20px; /* 글자 크기 증가 */
+    border-radius: 8px; /* 버튼 모서리 둥글게 만들기 (선택 사항) */
+}
+
+
+/* Adjusting navbar for mobile */
+.navbar {
+    padding: 10px 15px;
+}
+
+@media (max-width: 576px) {
+    #intro {
+        padding: 20px;
+    }
+}

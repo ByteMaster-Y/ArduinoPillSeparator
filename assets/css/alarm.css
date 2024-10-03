@@ -1,3 +1,16 @@
+@font-face {
+font-family: 'TTLaundryGothicB';
+src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2') format('woff2');
+font-weight: 700;
+font-style: normal;
+}
+
+@font-face {
+font-family: "bw";
+src: url("https://robindelaporte.fr/codepen/play/BwModelicaSS01-ExtraBold.woff") format("woff");
+}
+  
+
 * {
   padding: 0;
   margin: 0;
@@ -11,15 +24,14 @@
 
 
 body {
-  /* background: linear-gradient(45deg, #007bff, #27ae60); */
-  /* background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%); */
-  background-color: rgb(104, 174, 238); /* 명확하게 배경색 설정 */
+  background-color: rgb(104, 174, 238);
   color: #fff;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* 상단에 고정 */
+  align-items: flex-start;
   min-height: 100vh;
   margin: 0;
+  font-family: 'TTLaundryGothicB', 'bw', sans-serif; /* 여기서 기본 폰트로 설정 */
 }
 
 .hide {
@@ -43,11 +55,10 @@ body {
 .timer-display {
   font-size: 2.18em;
   text-align: center;
-  font-family: "Roboto Mono", monospace;
+  font-family: "Roboto Mono", monospace; /* 기존 글꼴 */
   color: #000000;
   margin-bottom: 2em;
 }
-
 /* .inputs {
   display: flex;
   align-items: center;
@@ -74,7 +85,9 @@ body {
   cursor: pointer;
 }
 
+/* 알람 텍스트에 새 폰트 적용 */
 .alarm {
+  font-family: 'TTLaundryGothicB', 'bw', sans-serif; /* 알람 텍스트에 폰트 적용 */
   display: grid;
   grid-template-columns: 8fr 2fr 2fr;
   gap: 1em;

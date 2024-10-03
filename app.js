@@ -35,10 +35,12 @@ app.use('/assets', express.static(__dirname + '/assets'));
 
 indexRouter = require('./router/home');
 alarmRouter = require('./router/alarm');
+settingRouter = require('./router/setting');
 // memberRouter = require('./router/member');
 
 app.use('/', indexRouter);
 app.use('/alarm', alarmRouter);
+app.use('/alarm/setting', settingRouter);
 // app.use('/member', memberRouter);
 
 // 처음에 / 주소, 그다음에 함수 ()
