@@ -4,11 +4,16 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+/* 설정버튼 아래 약간 마진 줘서 간격 떨어지게 */
+#setting1 {
+  margin-top: 25px; /* 원하는 여백 크기로 조정 */
+}
+
 
 body {
-  font-family: Arial, sans-serif;
   /* background: linear-gradient(45deg, #007bff, #27ae60); */
-  background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+  /* background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%); */
+  background-color: rgb(104, 174, 238); /* 명확하게 배경색 설정 */
   color: #fff;
   display: flex;
   justify-content: center;
@@ -80,6 +85,15 @@ body {
   color: #000000;
 }
 
+.deleteButton {
+  background-color: transparent;
+  font-size: 1.5em;
+  color: #377dff;
+  border: none;
+  cursor: pointer;
+  justify-self: end; /* 쓰레기통 버튼을 오른쪽으로 정렬 */
+}
+
 .alarm input[type="checkbox"] {
   appearance: none;
   height: 2em;
@@ -111,12 +125,3 @@ body {
   left: 2em;
 }
 
-.deleteButton {
-  background-color: transparent;
-  font-size: 1.5em;
-  color: #377dff;
-  border: none;
-  cursor: pointer;
-}
-
-/* ----------------------모달 스타일---------------------- */
