@@ -77,6 +77,7 @@ let alarmsArray = []; // 알람 객체를 저장할 배열
 let alarmIndex = 0; // 알람 인덱스
 // 요일 배열 (전체 요일)
 const allDays = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
+let alarmSound = new Audio("/assets/alarm.mp3"); // 알람 사운드 추가
 
 // 한 자리 숫자 앞에 0 추가
 const appendZero = (value) => (value < 10 ? "0" + value : value);
@@ -111,6 +112,8 @@ function displayTimer() {
   alarmsArray.forEach((alarm) => {
       if (alarm.isActive && `${alarm.alarmHour}:${alarm.alarmMinute}` === `${hours}:${minutes}`) {
           // alert을 사용하여 알람 알림 표시
+          alarmSound.play();
+          alarmSound.loop = true;
           alert(`알람: ${alarm.alarmHour}:${alarm.alarmMinute} 알약 복용시간입니다!`);
           alarm.isActive = false; // 알람 비활성화
       }
@@ -300,8 +303,10 @@ const stopAlarm = (event) => {
   const alarmId = event.target.closest(".alarm").getAttribute("data-id"); // 알람 ID 가져오기
   const [exists, alarmObject] = searchObject("id", parseInt(alarmId)); // 객체 검색
   if (exists) {
+      alarmSound.pause();
       alarmObject.isActive = false; // 알람 비활성화
       alert(`알람 ${alarmObject.alarmHour}:${alarmObject.alarmMinute} 해제되었습니다.`);
+    
   }
 };
 
@@ -318,3 +323,5 @@ const deleteAlarm = (e) => {
     alarmsArray = alarmsArray.filter(alarm => alarm.id !== searchId);
   }
 };
+
+
