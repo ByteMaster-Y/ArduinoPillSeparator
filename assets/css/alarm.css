@@ -15,7 +15,7 @@ src: url("https://robindelaporte.fr/codepen/play/BwModelicaSS01-ExtraBold.woff")
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif;           이 설정이 알람페이지 전체 적용되어 글꼴을 바꾸고 있었음.*/
 }
 /* 설정버튼 아래 약간 마진 줘서 간격 떨어지게 */
 #setting1 {
@@ -31,7 +31,7 @@ body {
   align-items: flex-start;
   min-height: 100vh;
   margin: 0;
-  font-family: 'TTLaundryGothicB', 'bw', sans-serif; /* 여기서 기본 폰트로 설정 */
+  font-family: 'TTLaundryGothicB', 'bw', sans-serif !important; /* 여기서 기본 폰트로 설정 */
 }
 
 .hide {
