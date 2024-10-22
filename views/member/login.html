@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta charset="UTF-8">
+	<title>Pharmacy Tour Team login form</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300&amp;display=swap'>
+	<link rel="stylesheet" href="/assets/css/login.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="scene flex">
+	<section class="card">
+		<figure class="card__figure">
+			<img class="card__image" src="/assets/img/logindog.png" alt="">
+			<figcaption>
+				<span class="visually-hidden">
+					Avatar photo
+				</span>
+			</figcaption>
+		</figure>
+		<h1 class="card__heading">
+			<span class="visually-hidden">Account name:</span>
+			<span>
+				Login Tester
+			</span>
+		</h1>
+		<form class="card__form">
+			<label for="password" class="visually-hidden">Password:</label>
+			<input id="password" class="card__input" type="password" />
+			<!-- <button class="card__button" type="button">
+				<a href="/alarm"><span>Login</span></a>		
+			</button> -->
+			<button class="card__button" type="button" onclick="location.href='/alarm'">
+				<span>로그인</span>
+			</button>
+		</form>
+	</section>
+</div>
+<!-- partial -->
+  
+</body>
+</html>
