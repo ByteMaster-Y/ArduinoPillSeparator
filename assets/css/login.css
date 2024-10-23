@@ -90,3 +90,19 @@ body {
   background: rgba(255, 255, 255, 0.75);
   outline: none;
 }
+
+/*로그인 화면에 아이콘 넣기*/
+.input-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+.card__input {
+  padding-left: 30px; /* 아이콘 크기에 따라 조정 */
+}
+.input-container i {
+  position: absolute;
+  left: 10px; /* 아이콘 위치 조정 */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff; /* 아이콘 색상 */
+}

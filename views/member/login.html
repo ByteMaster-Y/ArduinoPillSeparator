@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Pharmacy Tour Team login form</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300&amp;display=swap'>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="/assets/css/login.css">
 </head>
 <body>
@@ -26,11 +27,16 @@
 			</span>
 		</h1>
 		<form class="card__form">
+			<label for="user_id" class="visually-hidden">Id:</label>
+			<div class="input-container">
+				<i class="bi bi-person"></i>
+				<input id="user_id" class="card__input" type="text" />
+			</div>
 			<label for="password" class="visually-hidden">Password:</label>
-			<input id="password" class="card__input" type="password" />
-			<!-- <button class="card__button" type="button">
-				<a href="/alarm"><span>Login</span></a>		
-			</button> -->
+			<div class="input-container">
+				<i class="bi bi-lock"></i>
+				<input id="password" class="card__input" type="password"/>
+			</div>
 			<button class="card__button" type="button" onclick="location.href='/alarm'">
 				<span>로그인</span>
 			</button>
