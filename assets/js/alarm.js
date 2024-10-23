@@ -28,17 +28,46 @@ const modalElement = document.getElementById('exampleModal');
 const modalInstance = new mdb.Modal(modalElement);  // 모달 인스턴스를 수동으로 초기화
 
 // 확인 버튼 이벤트 핸들러 함수
+// function confirmSpanClickHandler(dataId, span, alarm) {
+//   //alert('알람 수정이 완료되었습니다.'); // 추가 알림
+//   Swal.fire("알람 수정이 완료되었습니다.");
+//   alarm.alarmName = alarmNameInput.value;
+//   alarm.alarmHour = hourInput.value;
+//   alarm.alarmMinute = minuteInput.value;
+//   alarm.alarmDays = selectedDaysLabel.textContent.split(", ");
+//   console.log(alarm.alarmDays);
+//   modifyAlarm(span, alarm);
+//   updateAlarmById(dataId, alarm)
+//   modalInstance.hide();  // 모달 닫기
+// }
 function confirmSpanClickHandler(dataId, span, alarm) {
-  alert('알람 수정이 완료되었습니다.'); // 추가 알림
-  alarm.alarmName = alarmNameInput.value;
-  alarm.alarmHour = hourInput.value;
-  alarm.alarmMinute = minuteInput.value;
-  alarm.alarmDays = selectedDaysLabel.textContent.split(", ");
-  console.log(alarm.alarmDays);
-  modifyAlarm(span, alarm);
-  updateAlarmById(dataId, alarm)
-  modalInstance.hide();  // 모달 닫기
+  Swal.fire({
+    title: "알람을 수정하시겠습니까?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "수정",
+    denyButtonText: "수정하지 않음"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // 알람 수정 작업 수행
+      alarm.alarmName = alarmNameInput.value;
+      alarm.alarmHour = hourInput.value;
+      alarm.alarmMinute = minuteInput.value;
+      alarm.alarmDays = selectedDaysLabel.textContent.split(", ");
+      
+      modifyAlarm(span, alarm);
+      updateAlarmById(dataId, alarm);
+
+      // 수정 완료 메시지 표시
+      Swal.fire("수정 완료!", "", "success");
+    } else if (result.isDenied) {
+      Swal.fire("변경 사항이 저장되지 않았습니다.", "", "info");
+    }
+    
+    modalInstance.hide(); // 모달 닫기
+  });
 }
+
 
 function confirmAddClickHandler() {
   setAlarmFunction(); // 알람 설정 함수 호출
@@ -121,11 +150,19 @@ function displayTimer() {
           // alert을 사용하여 알람 알림 표시
           alarmSound.play();
           alarmSound.loop = true;
-          alert(`알람: ${alarm.alarmHour}:${alarm.alarmMinute} 알약 복용시간입니다!`);
+          // alert(`알람: ${alarm.alarmHour}:${alarm.alarmMinute} 알약 복용시간입니다!`);
+          Swal.fire({
+            title: "복용 시간입니다!",
+            text: `${alarm.alarmHour}:${alarm.alarmMinute}에 알약을 복용하세요.`,
+            icon: "warning",
+            confirmButtonText: "확인"
+        });
           alarm.isActive = false; // 알람 비활성화
       }
   });
 }
+
+
 
 // 입력값 체크 함수
 const inputCheck = (inputValue) => {
@@ -294,7 +331,13 @@ const startAlarm = (event) => {
   const [exists, alarmObject] = searchObject("id", parseInt(alarmId)); // 객체 검색
   if (exists) {
       alarmObject.isActive = true; // 알람 활성화
-      alert(`알람 ${alarmObject.alarmHour}:${alarmObject.alarmMinute} 설정되었습니다.`);
+      // alert(`알람 ${alarmObject.alarmHour}:${alarmObject.alarmMinute} 설정되었습니다.`);
+      Swal.fire({
+        title: '알람 설정됨!',
+        text: `알람 ${alarmObject.alarmHour}:${alarmObject.alarmMinute} 설정되었습니다.`,
+        icon: 'success',
+        confirmButtonText: '확인'
+    });
   }
 };
 
@@ -305,7 +348,13 @@ const stopAlarm = (event) => {
   if (exists) {
       alarmSound.pause();
       alarmObject.isActive = false; // 알람 비활성화
-      alert(`알람 ${alarmObject.alarmHour}:${alarmObject.alarmMinute} 해제되었습니다.`);
+      Swal.fire({
+        title: "알람이 해제되었습니다!",
+        text: `${alarmObject.alarmHour}:${alarmObject.alarmMinute} 알람이 성공적으로 해제되었습니다.`,
+        icon: "success",
+        confirmButtonText: "확인"
+      });
+      // alert(`알람 ${alarmObject.alarmHour}:${alarmObject.alarmMinute} 해제되었습니다.`);
     
   }
 };

@@ -11,6 +11,14 @@ const login = ((req, res) => { // async 필요 없는 경우: 단순히 화면�
     }
 });
 
+const signup = ((req, res) => { 
+    try {
+        res.render('member/signup');
+    } catch (error) {
+        res.status(500).send("<H1>500</H1> Error" + error);
+    }
+});
+
 // loginUserInfo.user_name에 해당하는 값이 어디서 정의?
 // 이 값은 loginProc 함수에서 정의된 세션 값에 포함
 const loginProc = (async(req,res) => {
@@ -42,5 +50,6 @@ const loginProc = (async(req,res) => {
 
 module.exports = {
     login,
-    loginProc
+    loginProc,
+    signup
 };
