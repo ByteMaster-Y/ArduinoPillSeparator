@@ -33,6 +33,11 @@ nunjucks.configure('views', {
 // + /assets 추가경로를 찾아준다.
 app.use('/assets', express.static(__dirname + '/assets'));
 
+// post data 받기
+app.use(express.urlencoded({
+    extended: true
+}));
+
 indexRouter = require('./router/home');
 alarmRouter = require('./router/alarm');
 settingRouter = require('./router/setting');

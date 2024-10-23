@@ -26,18 +26,18 @@
 				Login Tester
 			</span>
 		</h1>
-		<form class="card__form">
+		<form class="card__form" method="post">
 			<label for="user_id" class="visually-hidden">Id:</label>
 			<div class="input-container">
 				<i class="bi bi-person"></i>
-				<input id="user_id" class="card__input" type="text" />
+				<input id="user_id" name="user_id" class="card__input" type="text" />
 			</div>
 			<label for="password" class="visually-hidden">Password:</label>
 			<div class="input-container">
 				<i class="bi bi-lock"></i>
-				<input id="password" class="card__input" type="password"/>
+				<input id="password" name="password" class="card__input" type="password"/>
 			</div>
-			<button class="card__button" type="button" onclick="location.href='/alarm'">
+			<button class="card__button" type="submit">
 				<span>로그인</span>
 			</button>
 		</form>
