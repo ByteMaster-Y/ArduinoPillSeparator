@@ -58,6 +58,7 @@ Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알�
 ## 팀원 소개
 
 우리 프로젝트를 함께하는 팀원들을 소개합니다:
+https://docs.google.com/spreadsheets/d/1IyaiKiiavwlLS9CfkMccb5Tc6UsqPKQ_bup2qa2o8hY/edit?usp=sharing
 
 ## 라이선스
 
