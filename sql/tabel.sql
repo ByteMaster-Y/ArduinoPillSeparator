@@ -1,3 +1,17 @@
+use mysql;
+
+create database arduino;
+
+create user arduino@localhost identified by 'arduino';
+
+create user arduino@'%' identified by 'arduino';
+
+grant all privileges on arduino.* to arduino@localhost;
+
+grant all privileges on arduino.* to arduino@'%';
+
+flush privileges;
+
 drop table if exists member;
 create table member (
 	pkid int primary key auto_increment,
