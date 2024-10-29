@@ -105,3 +105,39 @@ body {
     transform: translateY(-50%);
     color: #fff; /* 아이콘 색상 */
   }
+
+  /*로그인 제이쿼리*/
+
+  .card__input::placeholder {
+    color: white;
+    /* 원하는 색상으로 변경 */
+    opacity: 0.7;
+    /* 투명도를 조정 (선택 사항) */
+  }
+  
+  .input-container {
+    position: relative;
+    margin-bottom: 1.5rem; /* 경고 메시지를 표시할 공간 확보 */
+  }
+  
+  .input-container i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+  }
+  
+  .card__input {
+    padding-left: 30px;
+  }
+  
+  /* 경고 메시지를 인풋 박스 아래에 표시 */
+  .invalid-feedback {
+    position: absolute;
+    bottom: -25px; /* 인풋 박스 아래에 여유 공간을 둠 */
+    left: 0;
+    display: block;
+    color: red;
+    font-size: 0.9rem;
+  }

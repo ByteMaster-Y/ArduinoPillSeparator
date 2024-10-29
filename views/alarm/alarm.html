@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pharmacy Tour Team</title>
@@ -12,13 +13,52 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.css" rel="stylesheet" />
     <!--Modal CSS-->
     <link rel="stylesheet" href="/assets/css/modal.css" />
+    <link rel="stylesheet" href="/assets/css/alarm.css" />
+    <style>
+        .dropdown {
+            position: relative;
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .dropdown-content {
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 5px;
+            padding: 10px;
+        }
+
+        .dropdown-content label {
+            display: block;
+            padding: 8px;
+        }
+
+        .dropdown-content input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        #dayFilterInput {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
 </head>
+
 <body>
     <div class="wrapper">
         <div class="timer-display">00:00:00</div>
         <div class="container">
-              <!-- Button trigger modal -->
-            <button id="set" class="set" data-mdb-ripple-init data-mdb-target="#exampleModal" data-mdb-toggle="modal" >
+            <!-- Button trigger modal -->
+            <button id="set" class="set" data-mdb-ripple-init data-mdb-target="#exampleModal" data-mdb-toggle="modal">
                 <img src="/assets/img/alarm-icon.svg" alt="버튼 이미지">
             </button>
             <div class="activeAlarms"></div>
@@ -43,48 +83,57 @@
                     <!-- 알약 이름 설정 -->
                     <div class="form-group row mb-3">
                         <div class="col-sm-12">
-                            <input type="text" id="alarmNameInput" class="form-control" placeholder="사용하실 알람의 알약 이름을 설정하세요." />
+                            <input type="text" id="alarmNameInput" class="form-control"
+                                placeholder="사용하실 알람의 알약 이름을 설정하세요." />
                         </div>
                     </div>
                     <!-- A to D Input Fields -->
                     <div class="form-group row mb-3">
-                        <label for="paramA" class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>A</strong></label>
+                        <label for="paramA"
+                            class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>A</strong></label>
                         <div class="col-sm-8">
                             <input type="text" id="paramA" class="form-control" placeholder="0" />
                         </div>
-                    </div>                    
+                    </div>
                     <div class="form-group row mb-3">
-                        <label for="paramB" class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>B</strong></label>
+                        <label for="paramB"
+                            class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>B</strong></label>
                         <div class="col-sm-8">
                             <input type="text" id="paramB" class="form-control" placeholder="0" />
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label for="paramC" class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>C</strong></label>
+                        <label for="paramC"
+                            class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>C</strong></label>
                         <div class="col-sm-8">
                             <input type="text" id="paramC" class="form-control" placeholder="0" />
                         </div>
                     </div>
                     <div class="form-group row mb-3">
-                        <label for="paramD" class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>D</strong></label>
+                        <label for="paramD"
+                            class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>D</strong></label>
                         <div class="col-sm-8">
                             <input type="text" id="paramD" class="form-control" placeholder="0" />
                         </div>
                     </div>
                     <!-- 알람 시간 설정 -->
                     <div class="inputs form-group row mb-3">
-                        <label for="alarmHourInput" class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>시간</strong></label>
+                        <label for="alarmHourInput"
+                            class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>시간</strong></label>
                         <div class="col-sm-4">
-                            <input type="number" id="hourInput" class="form-control" min="0" max="23" placeholder="00" />
+                            <input type="number" id="hourInput" class="form-control" min="0" max="23"
+                                placeholder="00" />
                         </div>
                         <div class="col-sm-4">
-                            <input type="number" id="minuteInput" class="form-control" min="0" max="59" placeholder="00" />
+                            <input type="number" id="minuteInput" class="form-control" min="0" max="59"
+                                placeholder="00" />
                         </div>
                     </div>
                     <!-- 알람 요일 설정 / 반복 및 오늘만 버튼 -->
                     <div class="form-group row mb-3">
                         <div class="col-sm-4 col-form-label d-flex align-items-center justify-content-center">
-                            <button type="button" class="btn day-button" data-mdb-toggle="modal" data-mdb-target="#daySelectionModal">요일</button>
+                            <button type="button" class="btn day-button" data-mdb-toggle="modal"
+                                data-mdb-target="#daySelectionModal">요일</button>
                             <!-- <button type="button" class="btn btn-white" data-mdb-toggle="modal" data-mdb-target="#daySelectionModal" >요일</button> -->
                         </div>
                         <div class="col-sm-8">
@@ -103,14 +152,15 @@
     </div>
 
     <!-- 요일 선택 모달 -->
-    <div class="modal fade" id="daySelectionModal" tabindex="-1" aria-labelledby="daySelectionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="daySelectionModal" tabindex="-1" aria-labelledby="daySelectionModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="alarmDays" style="text-align: center; display: block; font-size: 18px;">반복</label>
                         <select id="alarmDays" class="form-select" multiple>
                             <option value="mon">월요일</option>
@@ -121,22 +171,60 @@
                             <option value="sat">토요일</option>
                             <option value="sun">일요일</option>
                         </select>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="alarmDays" style="text-align: center; display: block; font-size: 18px;">반복</label>
+                        <div class="dropdown" id="daySelectionDropdown">
+                            <input type="text" class="form-control" placeholder="요일 반복 설정" id="dayFilterInput"
+                                onkeyup="filterDays()" />
+                            <div class="dropdown-content">
+                                <label><input type="checkbox" class="day-option" value="월요일" /> 월요일</label>
+                                <label><input type="checkbox" class="day-option" value="화요일" /> 화요일</label>
+                                <label><input type="checkbox" class="day-option" value="수요일" /> 수요일</label>
+                                <label><input type="checkbox" class="day-option" value="목요일" /> 목요일</label>
+                                <label><input type="checkbox" class="day-option" value="금요일" /> 금요일</label>
+                                <label><input type="checkbox" class="day-option" value="토요일" /> 토요일</label>
+                                <label><input type="checkbox" class="day-option" value="일요일" /> 일요일</label>
+                            </div>
+                        </div>
                     </div>
-                </div>                
+
+                </div>
                 <div class="modal-footer">
-                    <button type="button" id="cancelDaysButton" data-mdb-target="#exampleModal" data-mdb-toggle="modal" class="btn btn-danger">취소</button>
-                    <button type="button" class="btn btn-primary" data-mdb-target="#exampleModal" data-mdb-toggle="modal" id="confirmDaysButton">확인</button>
+                    <button type="button" id="cancelDaysButton" data-mdb-target="#exampleModal" data-mdb-toggle="modal"
+                        class="btn btn-danger">취소</button>
+                    <button type="button" class="btn btn-primary" data-mdb-target="#exampleModal"
+                        data-mdb-toggle="modal" id="confirmDaysButton">확인</button>
                 </div>
             </div>
         </div>
-    </div>    
-    
+    </div>
+
     <!-- Script -->
     <!-- MDB UI Kit -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.js"></script>
     <!-- Custom JS -->
     <script src="/assets/js/alarm.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function filterDays() {
+            const input = document.getElementById('dayFilterInput').value.toLowerCase();
+            const dayOptions = document.querySelectorAll('.dropdown-content label');
+
+            dayOptions.forEach(option => {
+                const labelText = option.innerText.toLowerCase();
+                option.style.display = labelText.includes(input) ? '' : 'none';
+            });
+        }
+
+        // Get selected days when '확인' button is clicked
+        document.getElementById('confirmDaysButton').addEventListener('click', () => {
+            const selectedDays = Array.from(document.querySelectorAll('.day-option:checked')).map(option => option.value);
+            document.getElementById('selectedDaysLabel').textContent = selectedDays.join(', ');
+        });
+
+    </script>
 
 </body>
+
 </html>
