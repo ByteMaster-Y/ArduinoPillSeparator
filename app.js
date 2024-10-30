@@ -37,6 +37,22 @@ nunjucks.configure('views', {
 // + /assets 추가경로를 찾아준다.
 app.use('/assets', express.static(__dirname + '/assets'));
 
+// 세션 사용을 위한 세팅
+const session = require('express-session');
+// const sessionFile = require('session-file-store')(session);
+const sessionDB = require('express-mysql-session')(session);
+const db = require('./common/db');
+
+app.use(session({
+    secret: "kiwu",
+    resave: true,
+    saveUninitialized: false,
+    // 세션 정보를 파일로 저장
+    // store: new sessionFile({logFn: function(){}})
+    // 세션 정보를 데이터베이스에 저장
+    store: new sessionDB(db.db)
+}));
+
 // post data 받기
 app.use(express.urlencoded({
     extended: true

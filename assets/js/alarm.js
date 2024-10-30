@@ -13,6 +13,77 @@ let alarmIndex = 0; // 알람 인덱스
 const allDays = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
 let alarmSound = new Audio("/assets/alarm.mp3"); // 알람 사운드 추가
 
+const spans = document.querySelectorAll(".span");
+console.log(spans.length);
+const start = async() => {
+  try {
+    const response = await fetch('/alarm/getAlarms', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const result = await response.json();
+    if (result.success) {
+      console.log("알람 불러오기 성공:", result.list);
+      if (result.list != null) {
+        result.list.forEach((alarm) => {
+          const alarmObj = {
+            userId: alarm.fk_user,
+            id: alarm.pill_id,
+            pillA: alarm.pillA,
+            pillB: alarm.pillB,
+            pillC: alarm.pillC,
+            pillD: alarm.pillD,
+            alarmHour: alarm.time.substr(0, 2),
+            alarmMinute: alarm.time.substr(2, 2),
+            alarmName: alarm.name, // 알람 이름 추가
+            alarmDays: alarm.day,  // 요일 정보 추가
+            isActive: false,
+          };
+          alarmsArray.push(alarmObj); // 배열에 추가
+        })
+      }
+    } else {
+      console.error("알람 추가 실패:", result.message);
+    }
+  } catch (error) {
+    console.error("네트워크 오류:", error);
+  }
+}
+
+start();
+
+// 각 span 요소에 클릭 이벤트 추가
+spans.forEach(async(span) => {
+  if (!span.dataset.clicked) {
+    span.addEventListener("click", () => {
+      const parentDiv = span.parentElement; 
+      const dataId = parentDiv.dataset.id;
+      const alarm = getAlarmById(dataId);
+      console.log(alarm);
+      alarmNameInput.value = alarm.alarmName;
+      hourInput.value = alarm.alarmHour;
+      minuteInput.value = alarm.alarmMinute;
+      selectedDaysLabel.innerText = alarm.alarmDays;
+      modalInstance.show(); // 모달 열기
+      const confirmButton = modalElement.querySelector('#confirm');
+      confirmButton.removeEventListener('click', confirmAddClickHandler);
+      confirmButton.removeEventListener('click', handleConfirmClick);
+      handleConfirmClick = () => {
+        confirmSpanClickHandler(dataId, span, alarm);
+      };
+      // 새로운 이벤트 리스너 추가
+      confirmButton.addEventListener('click', handleConfirmClick);
+
+    });
+
+    // 클릭 이벤트가 추가되었음을 표시
+    span.dataset.clicked = "true";
+  }
+});
+
+
 // 현재 시간을 표시하는 함수
 function updateCurrentTime() {
   const now = new Date();
@@ -188,16 +259,15 @@ minuteInput.addEventListener("input", () => {
 
 // 알람 div 생성 함수
 const createAlarm = async(alarmObj) => {
-  const { id, alarmHour, alarmMinute, alarmName, alarmDays } = alarmObj; // 알람 객체의 키
+  const { userId, id, pillA, pillB, pillC, pillD, alarmHour, alarmMinute, alarmName, alarmDays } = alarmObj; // 알람 객체의 키
   try {
-    const response = await fetch('/alarm', {
+    const response = await fetch('/alarm/insertAlarm', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ id, alarmHour, alarmMinute, alarmName, alarmDays })
+      body: JSON.stringify({ userId, id, pillA, pillB, pillC, pillD, alarmHour, alarmMinute, alarmName, alarmDays })
     });
-    console.log(id, alarmHour, alarmMinute, alarmName, alarmDays);
     const result = await response.json();
     if (result.success) {
       console.log("알람이 성공적으로 추가되었습니다:", result.result);
@@ -292,7 +362,7 @@ function modifyAlarm(span, alarmObj) {
 };
 
 // 알람 설정 함수
-const setAlarmFunction = () => {
+const setAlarmFunction = async() => {
   let hour = parseInt(hourInput.value); // 입력된 시간
   if (isNaN(hour)) {
     hour = 0;
@@ -311,21 +381,47 @@ const setAlarmFunction = () => {
     alert("알람 이름을 입력하세요."); // 유효성 검사
     return;
   }
+  const pillA = document.getElementById('paramA').value || 0;
+  const pillB = document.getElementById('paramB').value || 0;
+  const pillC = document.getElementById('paramC').value || 0;
+  const pillD = document.getElementById('paramD').value || 0;
   
+  console.log("a=",pillA," b=",pillB," C=",pillC," D=",pillD);
 
-  // 알람 객체 생성
-  const alarmObj = {
-      id: alarmIndex++,
-      alarmHour: appendZero(hour),
-      alarmMinute: appendZero(minute),
-      alarmName: alarmName, // 알람 이름 추가
-      alarmDays: selectedDays,  // 요일 정보 추가
-      isActive: true,
-  };
+  try {
+    const response = await fetch('/alarm/getMaxPillId', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const result = await response.json();
+    if (result.success) {
+      console.log("알람 객체 성공적으로 만들다:", result.pill_id, result.pkid);
+      // 알람 객체 생성
+      const alarmObj = {
+        userId: result.pkid,
+        id: result.pill_id + 1,
+        pillA: pillA,
+        pillB: pillB,
+        pillC: pillC,
+        pillD: pillD,
+        alarmHour: appendZero(hour),
+        alarmMinute: appendZero(minute),
+        alarmName: alarmName, // 알람 이름 추가
+        alarmDays: selectedDays,  // 요일 정보 추가
+        isActive: false,
+      };
 
-  alarmsArray.push(alarmObj); // 배열에 추가
-  createAlarm(alarmObj); // 알람 표시 생성
-  modalInstance.hide(); // 모달 닫기
+      alarmsArray.push(alarmObj); // 배열에 추가
+      createAlarm(alarmObj); // 알람 표시 생성
+      modalInstance.hide(); // 모달 닫기
+    } else {
+      console.error("알람 객체 실패:", result);
+    }
+  } catch (error) {
+    console.error("네트워크 오류:", error);
+  }
 };
 
 // 알람 찾기 함수

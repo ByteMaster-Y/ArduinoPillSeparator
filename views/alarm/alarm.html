@@ -61,7 +61,29 @@
             <button id="set" class="set" data-mdb-ripple-init data-mdb-target="#exampleModal" data-mdb-toggle="modal">
                 <img src="/assets/img/alarm-icon.svg" alt="버튼 이미지">
             </button>
-            <div class="activeAlarms"></div>
+            <div class="activeAlarms">
+                {% if list != null %}
+                {% for alarm in list %}
+                    <div class="alarm" data-id={{alarm.pill_id}}>
+                        <span class="span">
+                            {{alarm.name}}
+                            <br>
+                            {{alarm.time.substring(0, 5)}}
+                            <br>
+                            {% if alarm.day != '' %}
+                            {% if alarm.day == '월요일, 화요일, 수요일, 목요일, 금요일, 토요일, 일요일' %}
+                            매일
+                            {% else %}
+                            (<span style="font-size: 0.8em;">{{alarm.day}}</span>)
+                            {% endif %}
+                            {% endif %}
+                        </span>
+                        <input type="checkbox">
+                        <button class="deleteButton"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
             <div style="display: flex; justify-content: center;">
                 <a href="/alarm/setting"><button type="button" id="setting1" class="btn btn-primary">설정</button></a>
             </div>

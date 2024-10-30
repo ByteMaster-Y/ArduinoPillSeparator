@@ -3,6 +3,8 @@ const router = express.Router();
 const controller =  require('../controller/alarmController');
 
 router.get('/', controller.alarm);
-router.post('/', controller.insertAlarm);
+router.post('/insertAlarm', controller.insertAlarm);
+router.post('/getMaxPillId', controller.getMaxPillId);
+router.post('/getAlarms', controller.getAlarms);
 
 module.exports = router;

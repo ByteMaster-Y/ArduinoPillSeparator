@@ -35,10 +35,11 @@ const loginProc = (async(req,res) => {
         
         if (result != null) {
             //로그인 성공
-            console.log(
-                "pkid: ", result.pkid,
-                "user_id:", result.user_id,
-                "user_name:", result.name);
+            req.session.user = {
+                pkid: result.pkid,
+                user_id: result.user_id,
+                user_name: result.name
+            };
             res.redirect("/alarm/");
         } else {
             res.render("member/login");
