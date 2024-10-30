@@ -74,10 +74,26 @@ const getUserIdCount = async(user_id) => {
     }
 }
 
+const insertUser = async(user_id, user_pw, name) => {
+    try {
+        const sql = "insert into member(user_id, user_pw, name) values (?, ?, ?);";
+        const param = [user_id, user_pw, name];
+
+        const result = await db.runSql(sql, param);
+
+        console.log(result);
+
+        return result[0];
+    } catch (error) {
+        throw "SQL Query Error on insertUser";
+    }
+}
+
 module.exports = {
     loginCheck,
     getList,
     getData,
     getTotal,
-    getUserIdCount
+    getUserIdCount,
+    insertUser
 };

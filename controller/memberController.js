@@ -66,10 +66,26 @@ const cheackUserId = async(req, res) => {
     }
 }
 
+const postRegister = async(req, res) => {
+    try {
+        // post 방식의 데이터 받기
+        let {user_id, user_pw, nickname} = req.body;
+        // user_id = common.reqeustFilter(user_id, 20, false);
+        // user_pw = common.reqeustFilter(user_pw, 20, false);
+        // name = common.reqeustFilter(name, 50, false);
+
+        let register = await model.insertUser(user_id, user_pw, nickname);
+        // common.alertAndGo(res, "등록 되었습니다.", "/member/");
+        res.render("member/login");
+    } catch (error) {
+        res.status(500).send("<H1>500</H1> Error" + error);
+    }
+}
 
 module.exports = {
     login,
     loginProc,
     signup,
-    cheackUserId
+    cheackUserId,
+    postRegister
 };
