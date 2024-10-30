@@ -49,10 +49,10 @@
 					<i class="bi bi-person"></i>
 					<input id="user_id" name="user_id" class="card__input" type="text" />
 				</div>
-				<label for="password" class="visually-hidden">Password:</label>
+				<label for="user_pw" class="visually-hidden">Password:</label>
 				<div class="input-container">
 					<i class="bi bi-lock"></i>
-					<input id="password" name="password" class="card__input" type="password" />
+					<input id="user_pw" name="user_pw" class="card__input" type="password" />
 				</div>
 				<button class="card__button" type="submit">
 					<span>로그인</span>
@@ -72,7 +72,7 @@
 					user_id: {
 						required: true,
 					},
-					password: {  // 'user_pw'에서 'password'로 변경
+					user_pw: {  // 'user_pw'에서 'password'로 변경
 						required: true,
 					},
 				},
@@ -80,7 +80,7 @@
 					user_id: {
 						required: "아이디를 입력하세요.",
 					},
-					password: {  // 'user_pw'에서 'password'로 변경
+					user_pw: {  // 'user_pw'에서 'password'로 변경
 						required: "비밀번호를 입력하세요.",
 					}
 				},

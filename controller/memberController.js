@@ -24,13 +24,13 @@ const signup = ((req, res) => {
 const loginProc = (async(req,res) => {
     try {
         // post 방식의 데이터 받기
-        let {user_id, password} = req.body;
-        console.log(user_id, password);
+        let {user_id, user_pw} = req.body;
+        console.log(user_id, user_pw);
         // XSS 방지 ==> 엄격하게
         // user_id = common.reqeustFilter(user_id, 20, false);
         // password = common.reqeustFilter(user_pw, 20, false);
 
-        const result = await model.loginCheck(user_id, password);
+        const result = await model.loginCheck(user_id, user_pw);
         
         if (result != null) {
             //로그인 성공
