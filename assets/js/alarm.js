@@ -92,6 +92,23 @@ setAlarm.addEventListener('click', () => {
   confirmButton.addEventListener('click', confirmAddClickHandler);
 });
 
+// 요일 
+function filterDays() {
+  const input = document.getElementById('dayFilterInput').value.toLowerCase();
+  const dayOptions = document.querySelectorAll('.dropdown-content label');
+
+  dayOptions.forEach(option => {
+      const labelText = option.innerText.toLowerCase();
+      option.style.display = labelText.includes(input) ? '' : 'none';
+  });
+}
+
+// Get selected days when '확인' button is clicked
+document.getElementById('confirmDaysButton').addEventListener('click', () => {
+  const selectedDays = Array.from(document.querySelectorAll('.day-option:checked')).map(option => option.value);
+  document.getElementById('selectedDaysLabel').textContent = selectedDays.join(', ');
+});
+
 // 요일 설정 로직 
 document.getElementById('confirmDaysButton').addEventListener('click', function() {
   selectedDays = Array.from(document.getElementById('alarmDays').selectedOptions)
