@@ -50,3 +50,41 @@ display: block; /* 블록 요소로 설정 */
 body {
     background-color: rgb(104, 174, 238);;
 }
+
+/*모달 반응형으로 조절*/
+/* 모바일 화면에서 같은 행에 유지하기 위한 CSS */
+@media (max-width: 576px) {
+    .form-group.row.mb-3 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .form-group.row.mb-3 .col-form-label {
+        flex: 1;
+        max-width: 40%; /* 레이블의 최대 너비 설정 */
+    }
+
+    .form-group.row.mb-3 .col-sm-8 {
+        flex: 2;
+        max-width: 60%; /* 인풋 박스의 최대 너비 설정 */
+    }
+
+    /* 시간 및 분 필드가 같은 행에 유지되도록 설정 */
+    .inputs.form-group.row.mb-3 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .inputs .col-sm-4 {
+        flex: 1;
+    }
+
+    .inputs .col-sm-4  {
+        flex: 2;
+        max-width: 30%; /* 인풋 박스의 최대 너비 설정 */
+    }
+}
+
+
