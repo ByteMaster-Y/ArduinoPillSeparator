@@ -206,25 +206,6 @@
     <!-- Custom JS -->
     <script src="/assets/js/alarm.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function filterDays() {
-            const input = document.getElementById('dayFilterInput').value.toLowerCase();
-            const dayOptions = document.querySelectorAll('.dropdown-content label');
-
-            dayOptions.forEach(option => {
-                const labelText = option.innerText.toLowerCase();
-                option.style.display = labelText.includes(input) ? '' : 'none';
-            });
-        }
-
-        // Get selected days when '확인' button is clicked
-        document.getElementById('confirmDaysButton').addEventListener('click', () => {
-            const selectedDays = Array.from(document.querySelectorAll('.day-option:checked')).map(option => option.value);
-            document.getElementById('selectedDaysLabel').textContent = selectedDays.join(', ');
-        });
-
-    </script>
-
 </body>
 
 </html>
