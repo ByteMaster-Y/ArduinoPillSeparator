@@ -82,6 +82,10 @@ setAlarm.addEventListener('click', () => {
   hourInput.value = ''; // 입력 필드 초기화
   minuteInput.value = ''; // 입력 필드 초기화
   selectedDaysLabel.innerText = ''; // 입력 필드 초기화
+  // 요일 선택 초기화
+  document.querySelectorAll('.day-option').forEach(option => {
+    option.checked = false;
+  });
 
   // 기존의 확인 버튼 이벤트 리스너 제거
   const confirmButton = modalElement.querySelector('#confirm');
@@ -103,31 +107,18 @@ function filterDays() {
   });
 }
 
-// Get selected days when '확인' button is clicked
-document.getElementById('confirmDaysButton').addEventListener('click', () => {
-  const selectedDays = Array.from(document.querySelectorAll('.day-option:checked')).map(option => option.value);
-  document.getElementById('selectedDaysLabel').textContent = selectedDays.join(', ');
-});
-
 // 요일 설정 로직 
 document.getElementById('confirmDaysButton').addEventListener('click', function() {
-  selectedDays = Array.from(document.getElementById('alarmDays').selectedOptions)
-                              .map(option => option.text); // 선택된 요일의 텍스트를 가져옴
+  // 선택된 요일의 텍스트를 가져옴
+  selectedDays = Array.from(document.querySelectorAll('.day-option:checked')).map(option => option.value);
 
   // 선택된 요일을 레이블에 표시
-  if (selectedDays.length > 0) {
-      selectedDaysLabel.textContent = `${selectedDays.join(', ')}`;
-  } else {
-      selectedDaysLabel.textContent = '';
-  }
+  document.getElementById('selectedDaysLabel').textContent = selectedDays.join(', ');
 
-  // 요일 선택 초기화
-  document.getElementById('alarmDays').value= "";
   // 요일 선택 모달을 닫음
   const dayModal = document.getElementById('daySelectionModal');
   const dayModalInstance = mdb.Modal.getInstance(dayModal);
-  dayModalInstance.hide(); // daySelectionModal만 닫음
-  // exampleModal은 닫지 않음 (기존 상태 유지)
+  dayModalInstance.hide(); // daySelectionModal 닫음
 });
 
 
