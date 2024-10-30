@@ -89,21 +89,6 @@ const insertUser = async(user_id, user_pw, name) => {
     }
 }
 
-const insertAlarm = async(id, alarmHour, alarmMinute, alarmName, alarmDays) => {
-    try {
-        const sql = "insert into alarm(fg_user, dt_id, name, pillA, pillB, pillC, pillD, time, day) values(1, ?, ?, 0, 0, 0, 1, ?, ?)";
-        let time = alarmHour+":"+alarmMinute+":00";
-        const param = [id, alarmName, time, alarmDays];
-
-        const result = await db.runSql(sql, param);
-
-        console.log(result);
-
-        return result[0];
-    } catch (error) {
-        throw "SQL Query Error on insertUser";
-    }
-}
 
 module.exports = {
     loginCheck,
@@ -112,5 +97,4 @@ module.exports = {
     getTotal,
     getUserIdCount,
     insertUser,
-    insertAlarm
 };
