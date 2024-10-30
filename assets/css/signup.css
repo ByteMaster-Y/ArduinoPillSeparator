@@ -114,8 +114,8 @@ body {
 .input-container i {
   position: absolute;
   left: 10px; /* 아이콘 위치 조정 */
-  top: 50%;
-  transform: translateY(-50%);
+  top: 14%;
+  /* transform: translateY(-50%); */
   color: #fff; /* 아이콘 색상 */
 }
 
