@@ -15,20 +15,6 @@ const loginCheck = (async(user_id, user_pw) => {
     }
 });
 
-// const getList = async() => {
-//     try {
-//         const sql = "select pkid, user_id, name, regdate from member order by pkid desc";
-
-//         const reslut = await db.runSql(sql);
-
-//         console.log(reslut);
-
-//         return reslut;
-//     } catch (error) {
-//         throw "SQL Query Error on getList";
-//     }
-// }
-
 const getData = async(pkid) => {
     try {
         const sql = "select pkid, user_id, name, regdate from member where pkid = ?";
@@ -72,10 +58,26 @@ const getTotal = async() => {
         throw "SQL Query Error on getList";
     }
 }
-//
+
+const getUserIdCount = async(user_id) => {
+    try {
+        const sql = "select count(pkid) as cnt from member where user_id = ?";
+        const param = [user_id];
+
+        const result = await db.runSql(sql, param);
+
+        console.log(result);
+
+        return result[0].cnt;
+    } catch (error) {
+        throw "SQL Query Error on getUserIdCount";
+    }
+}
+
 module.exports = {
     loginCheck,
     getList,
     getData,
-    getTotal
+    getTotal,
+    getUserIdCount
 };

@@ -47,11 +47,29 @@ const loginProc = (async(req,res) => {
     }
 });
 
+const cheackUserId = async(req, res) => {
+    try {
+        // post 방식의 데이터 받기
+        let {user_id} = req.body;
 
+        // user_id = common.reqeustFilter(user_id, 20, false);
+        let count = await model.getUserIdCount(user_id);
+
+        if (count == 0) {
+            res.send('true');
+        } else {
+            res.send('false');
+
+        }
+    } catch (error) {
+        res.status(500).send("<H1>500</H1> Error" + error);
+    }
+}
 
 
 module.exports = {
     login,
     loginProc,
-    signup
+    signup,
+    cheackUserId
 };
