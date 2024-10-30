@@ -1,4 +1,9 @@
 // 초기 참조 설정
+// import { createRequire } from '../../node_modules';
+// const require = createRequire(import.meta.url);
+// const model = require('../../model/memberModel');
+import * as model from '../../model/insertAlarm.js';
+
 let timerRef = document.querySelector(".timer-display"); // 타이머 디스플레이
 const alarmNameInput = document.getElementById("alarmNameInput"); // 알람 이름 입력 필드
 const hourInput = document.getElementById("hourInput"); // 시간 입력 필드
@@ -187,8 +192,10 @@ minuteInput.addEventListener("input", () => {
 });
 
 // 알람 div 생성 함수
-const createAlarm = (alarmObj) => {
+const createAlarm = async(alarmObj) => {
   const { id, alarmHour, alarmMinute, alarmName, alarmDays } = alarmObj; // 알람 객체의 키
+  
+  const result = await model.insertAlarm(id, alarmHour, alarmMinute, alarmName, alarmDays);
 
   let alarmDiv = document.createElement("div"); // 새로운 div 생성
   alarmDiv.classList.add("alarm"); // 클래스 추가
@@ -215,6 +222,7 @@ const createAlarm = (alarmObj) => {
           stopAlarm(e); // 알람 중지
       }
   });
+  alarmObject.isActive = false;
   let deleteButton = document.createElement("button");
   deleteButton.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
   deleteButton.classList.add("deleteButton");
@@ -284,10 +292,15 @@ const setAlarmFunction = () => {
   }
   const alarmName = document.getElementById('alarmNameInput').value; // 알람 이름 입력값
 
-  if (hour < 0 || hour > 23 || minute < 0 || minute > 59 || !alarmName) {
+  if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
       alert("올바른 시간을 입력하세요."); // 유효성 검사
       return;
   }
+  if (!alarmName) {
+    alert("알람 이름을 입력하세요."); // 유효성 검사
+    return;
+  }
+  
 
   // 알람 객체 생성
   const alarmObj = {
