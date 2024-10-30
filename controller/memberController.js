@@ -5,7 +5,8 @@ const model = require('../model/memberModel');
 
 const login = ((req, res) => { // async 필요 없는 경우: 단순히 화면만 렌더링할 때 (login) 
     try {
-        res.render('member/login');
+        let {name} = req.query;
+        res.render('member/login', {name});
     } catch (error) {
         res.status(500).send("<H1>500</H1> Error" + error);
     }
@@ -38,7 +39,7 @@ const loginProc = (async(req,res) => {
                 "pkid: ", result.pkid,
                 "user_id:", result.user_id,
                 "user_name:", result.name);
-            res.render("alarm/alarm");
+            res.redirect("/alarm/");
         } else {
             res.render("member/login");
         }
@@ -76,7 +77,7 @@ const postRegister = async(req, res) => {
 
         let register = await model.insertUser(user_id, user_pw, nickname);
         // common.alertAndGo(res, "등록 되었습니다.", "/member/");
-        res.render("member/login");
+        res.redirect("/member/login?name="+nickname);
     } catch (error) {
         res.status(500).send("<H1>500</H1> Error" + error);
     }

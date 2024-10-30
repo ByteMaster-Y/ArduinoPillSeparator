@@ -25,7 +25,11 @@
 			<h1 class="card__heading">
 				<span class="visually-hidden">Account name:</span>
 				<span>
+					{% if name %}
+					{{name}}님 가입을 환영합니다.
+					{% else %}
 					Login Tester
+					{% endif %}
 				</span>
 			</h1>
 			<!-- <form class="card__form" method="post">
@@ -43,7 +47,7 @@
 					<span>로그인</span>
 				</button>
 			</form> -->
-			<form id="loginFrm" class="card__form" method="post">
+			<form id="loginFrm" class="card__form" method="post" action="/member/login">
 				<label for="user_id" class="visually-hidden">Id:</label>
 				<div class="input-container">
 					<i class="bi bi-person"></i>
