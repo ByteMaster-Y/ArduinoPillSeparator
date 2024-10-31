@@ -5,11 +5,15 @@ const model = require('../model/memberModel');
 
 const login = ((req, res) => { // async 필요 없는 경우: 단순히 화면만 렌더링할 때 (login) 
     try {
-        let {name} = req.query;
-        if (name == undefined) {
-            res.render('member/login');
+        if (req.session.user) {
+            res.redirect("/alarm/");
         } else {
-            res.render('member/login', {name});
+            let {name} = req.query;
+            if (name == undefined) {
+                res.render('member/login');
+            } else {
+                res.render('member/login', {name});
+            }
         }
     } catch (error) {
         res.status(500).send("<H1>500</H1> Error" + error);
@@ -76,6 +80,7 @@ const cheackUserId = async(req, res) => {
 
 const postRegister = async(req, res) => {
     try {
+        delete req.session.user;
         // post 방식의 데이터 받기
         let {user_id, user_pw, nickname} = req.body;
         // user_id = common.reqeustFilter(user_id, 20, false);
