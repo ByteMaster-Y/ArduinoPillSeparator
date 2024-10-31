@@ -6,7 +6,11 @@ const model = require('../model/memberModel');
 const login = ((req, res) => { // async 필요 없는 경우: 단순히 화면만 렌더링할 때 (login) 
     try {
         let {name} = req.query;
-        res.render('member/login', {name});
+        if (name == undefined) {
+            res.render('member/login');
+        } else {
+            res.render('member/login', {name});
+        }
     } catch (error) {
         res.status(500).send("<H1>500</H1> Error" + error);
     }
@@ -40,7 +44,9 @@ const loginProc = (async(req,res) => {
                 user_id: result.user_id,
                 user_name: result.name
             };
-            res.redirect("/alarm/");
+            req.session.save(function(){
+                res.redirect("/alarm/");
+            });
         } else {
             res.render("member/login");
         }
