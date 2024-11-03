@@ -49,8 +49,24 @@ const getAlarms = async(userId) => {
     }
 }
 
+const deleteAlarm = async (userId, alarmId) => {
+    try {
+        const sql = "DELETE FROM alarm WHERE fk_user = ? AND pill_id = ?";
+        const param = [userId, alarmId];
+        await db.runSql(sql, param);
+        return true;
+    } catch (error) {
+        console.error("Error in deleteAlarm:", error.message || error);
+        throw "SQL Query Error on deleteAlarm";
+    }
+}
+
+
 module.exports = {
     insertAlarm,
     getMaxPillId,
-    getAlarms
+    getAlarms,
+    deleteAlarm
 };
+
+

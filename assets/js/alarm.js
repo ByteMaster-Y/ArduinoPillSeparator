@@ -147,12 +147,37 @@ function confirmAddClickHandler() {
 
 let handleConfirmClick;
 
-setAlarm.addEventListener('click', () => {
+// setAlarm.addEventListener('click', () => {
+//   modalInstance.show(); // 모달 열기
+//   alarmNameInput.value = ''; // 입력 필드 초기화
+//   hourInput.value = ''; // 입력 필드 초기화
+//   minuteInput.value = ''; // 입력 필드 초기화
+//   selectedDaysLabel.innerText = ''; // 입력 필드 초기화
+//   // 요일 선택 초기화
+//   document.querySelectorAll('.day-option').forEach(option => {
+//     option.checked = false;
+//   });
+
+//   // 기존의 확인 버튼 이벤트 리스너 제거
+//   const confirmButton = modalElement.querySelector('#confirm');
+//   confirmButton.removeEventListener('click', confirmAddClickHandler);
+//   confirmButton.removeEventListener('click', handleConfirmClick);
+
+//   // 새로운 확인 버튼 이벤트 추가
+//   confirmButton.addEventListener('click', confirmAddClickHandler);
+// });
+
+
+
+
+// 모달을 초기화하고 여는 함수
+function openAlarmModal() {
   modalInstance.show(); // 모달 열기
   alarmNameInput.value = ''; // 입력 필드 초기화
   hourInput.value = ''; // 입력 필드 초기화
   minuteInput.value = ''; // 입력 필드 초기화
   selectedDaysLabel.innerText = ''; // 입력 필드 초기화
+
   // 요일 선택 초기화
   document.querySelectorAll('.day-option').forEach(option => {
     option.checked = false;
@@ -165,7 +190,24 @@ setAlarm.addEventListener('click', () => {
 
   // 새로운 확인 버튼 이벤트 추가
   confirmButton.addEventListener('click', confirmAddClickHandler);
+}
+
+// 클릭 이벤트 핸들러
+setAlarm.addEventListener('click', () => {
+  if (checkAlarmLimit()) {
+    openAlarmModal(); // 알람 개수 제한을 넘지 않았을 때만 모달 열기
+  }
 });
+
+// 알람 개수를 확인하는 함수
+// 알람 개수 확인 및 버튼 비활성화 함수
+function checkAlarmLimit() {
+  if (alarmsArray.length >= 4) {
+    setAlarm.disabled = true;  // 알람 설정 버튼 비활성화
+    
+  }
+}
+
 
 // 요일 
 function filterDays() {

@@ -56,10 +56,21 @@ const getAlarms = async(req, res) => {
     }
 };
 
+const deleteAlarm = async (req, res) => {
+    try {
+        const { userId, alarmId } = req.body; // 클라이언트에서 전송한 userId와 alarmId
+        await model.deleteAlarm(userId, alarmId); // 모델에서 삭제 함수 호출
+        res.json({ success: true });
+    } catch (error) {
+        console.error("Error in deleteAlarm:", error);
+        res.status(500).json({ success: false, message: error });
+    }
+};
 
 module.exports = {
     alarm,
     insertAlarm,
     getMaxPillId,
-    getAlarms
+    getAlarms,
+    deleteAlarm
 };
