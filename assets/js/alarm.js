@@ -13,8 +13,10 @@ let alarmIndex = 0; // 알람 인덱스
 const allDays = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
 let alarmSound = new Audio("/assets/alarm.mp3"); // 알람 사운드 추가
 
+////////////////////////////////////////////////////////DB알람가져옴////////////////////////////////////////////////////////
 const spans = document.querySelectorAll(".span");
 console.log(spans.length);
+
 const start = async() => {
   try {
     const response = await fetch('/alarm/getAlarms', {
@@ -54,7 +56,7 @@ const start = async() => {
 
 start();
 
-// 각 span 요소에 클릭 이벤트 추가
+// DB에서 가져온 알람들 각 span 요소에 클릭 이벤트 추가
 spans.forEach(async(span) => {
   if (!span.dataset.clicked) {
     span.addEventListener("click", () => {
@@ -83,6 +85,24 @@ spans.forEach(async(span) => {
   }
 });
 
+// DB에서 가져온 알람들 체크박스 이벤트 부여
+let checkboxes = document.querySelectorAll("input[type='checkbox']");
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener("click", (e) => {
+      if (e.target.checked) {
+          startAlarm(e); // 알람 시작
+      } else {
+          stopAlarm(e); // 알람 중지
+      }
+  });
+});
+
+// DB에서 가져온 알람들 삭제 버튼 이벤트 부여
+let deleteButtons = document.querySelectorAll(".deleteButton");
+deleteButtons.forEach((button) => {
+  button.addEventListener("click", (e) => deleteAlarm(e));
+});
+////////////////////////////////////////////////////////DB알람가져옴////////////////////////////////////////////////////////
 
 // 현재 시간을 표시하는 함수
 function updateCurrentTime() {
@@ -342,7 +362,6 @@ const createAlarm = async(alarmObj) => {
           stopAlarm(e); // 알람 중지
       }
   });
-  alarmObj.isActive = false;
   let deleteButton = document.createElement("button");
   deleteButton.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
   deleteButton.classList.add("deleteButton");
