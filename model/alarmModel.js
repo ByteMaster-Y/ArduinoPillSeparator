@@ -49,10 +49,10 @@ const getAlarms = async(userId) => {
     }
 }
 
-const deleteAlarm = async (userId, alarmId) => {
+const deleteAlarm = async (userId, pill_id) => {
     try {
         const sql = "DELETE FROM alarm WHERE fk_user = ? AND pill_id = ?";
-        const param = [userId, alarmId];
+        const param = [userId, pill_id];
         await db.runSql(sql, param);
         return true;
     } catch (error) {

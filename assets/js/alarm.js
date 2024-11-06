@@ -495,13 +495,91 @@ setInterval(displayTimer, 1000); // 1초마다 호출
 
 
 //delete alarm
-const deleteAlarm = (e) => {
-  let searchId = e.target.parentElement.parentElement.getAttribute("data-id");
-  let [exists] = searchObject("id", searchId);
+// const deleteAlarm = async (e) => {
+//   let searchId = e.target.parentElement.parentElement.getAttribute("data-id");
+//   let [exists,alarmObject] = searchObject("id", searchId);
+ 
+
+//   if (exists) {
+//     e.target.parentElement.parentElement.remove();
+//     alarmsArray = alarmsArray.filter(alarm => alarm.id !== searchId);
+
+//     alarmObject = null; // alarmObject 참조 해제
+
+//     console.log("삭제할 알람 객체:", alarmObject); // 찾은 알람 객체 출력
+
+//     try {
+//       const response = await fetch('/alarm/deleteAlarm', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//           userId: user.id, // 사용자 ID 전송
+//           alarmId: searchId // 삭제할 알람 ID 전송
+//         })
+//       });
+
+//       const result = await response.json();
+//       if (result.success) {
+//         console.log("알람이 성공적으로 제거되었습니다:", result.result);
+//       } else {
+//         console.error("알람 제거 실패:", result.message);
+//       }
+//     } catch (error) {
+//       console.error("네트워크 오류:", error);
+//     }
+//   } else {
+//     console.error("알람을 찾을 수 없습니다."); // 알람이 없을 때의 처리
+//   }
+// };
+
+// delete alarm
+const deleteAlarm = async (e) => {
+  const searchId = parseInt(e.target.closest(".alarm").getAttribute("data-id")); // 알람 ID 가져오기
+  const [exists, alarmObject] = searchObject("id", searchId); // 객체 검색
+
+  // 디버깅용 로그 추가
+  console.log("검색할 알람 ID:", searchId);
+  console.log("알람 객체 존재 여부:", exists);
+  console.log("검색된 알람 객체:", alarmObject);
+
   if (exists) {
-    e.target.parentElement.parentElement.remove();
+    console.log("삭제할 알람 객체:", alarmObject);
+
+    // DOM에서 알람 요소 제거
+    e.target.closest(".alarm").remove();
+    
+    // alarmsArray에서 해당 알람 객체 제거
     alarmsArray = alarmsArray.filter(alarm => alarm.id !== searchId);
+    
+    try {
+      const response = await fetch('/alarm/deleteAlarm', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: alarmObject.userId, // 사용자 ID 전송
+          alarmId: searchId // 삭제할 알람 ID 전송
+        })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        console.log("알람이 성공적으로 제거되었습니다:", result.result);
+      } else {
+        console.error("알람 제거 실패:", result.message);
+      }
+    } catch (error) {
+      console.error("네트워크 오류:", error);
+    }
+  } else {
+    console.error("알람을 찾을 수 없습니다.");
   }
 };
+
+
+
 
 

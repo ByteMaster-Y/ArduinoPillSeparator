@@ -56,16 +56,36 @@ const getAlarms = async(req, res) => {
     }
 };
 
+// const deleteAlarm = async (req, res) => {
+//     try {
+//         const { userId, id } = req.body; // 클라이언트에서 전송한 userId와 pill_id
+//         await model.deleteAlarm(userId, id); // 모델에서 삭제 함수 호출
+//         res.json({ success: true });
+//     } catch (error) {
+//         console.error("Error in deleteAlarm:", error);
+//         res.status(500).json({ success: false, message: error });
+//     }
+// };
+
 const deleteAlarm = async (req, res) => {
     try {
-        const { userId, alarmId } = req.body; // 클라이언트에서 전송한 userId와 alarmId
-        await model.deleteAlarm(userId, alarmId); // 모델에서 삭제 함수 호출
-        res.json({ success: true });
+        const { userId, alarmId } = req.body;
+        
+        console.log("삭제할 알람 ID:", userId, alarmId);
+        const result = await model.deleteAlarm(userId, alarmId);
+        
+        // 성공적으로 삭제된 경우
+        if (result) {
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ success: false, message: "알람을 찾을 수 없습니다." });
+        }
     } catch (error) {
         console.error("Error in deleteAlarm:", error);
-        res.status(500).json({ success: false, message: error });
+        res.status(500).json({ success: false, message: error.message });
     }
 };
+
 
 module.exports = {
     alarm,
