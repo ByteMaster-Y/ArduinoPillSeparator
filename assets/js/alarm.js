@@ -38,7 +38,7 @@ const start = async() => {
             pillC: alarm.pillC,
             pillD: alarm.pillD,
             alarmHour: alarm.time.substr(0, 2),
-            alarmMinute: alarm.time.substr(2, 2),
+            alarmMinute: alarm.time.substr(3, 2),
             alarmName: alarm.name, // 알람 이름 추가
             alarmDays: alarm.day,  // 요일 정보 추가
             isActive: false,
