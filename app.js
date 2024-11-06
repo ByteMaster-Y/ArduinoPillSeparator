@@ -8,23 +8,6 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 
-const { SerialPort } = require('serialport');   // 아두이노와 시리얼 통신을 위한 패키지
-// const COM = 'COM4';  //  여기에 아두이노가 연결된 포트 번호를 입력
-// const arduino = new SerialPort({
-//     path: COM,
-//     baudRate: 9600,
-//     dataBits: 8,
-//     parity: 'none',
-//     stopBits: 1,
-//     flowControl: false
-// });
-// arduino.on('open', function() {
-//     console.log("오픈 시리얼 커뮤니케이션");
-//     arduino.on('data', function(data) {
-//         console.log(data);
-//     });
-// });
-
 app.set('view engine', 'html');
 nunjucks.configure('views', {
     express: app,
@@ -62,11 +45,13 @@ indexRouter = require('./router/home');
 alarmRouter = require('./router/alarm');
 settingRouter = require('./router/setting');
 memberRouter = require('./router/member');
+arduinoRouter = require('./router/arduino');
 
 app.use('/', indexRouter);
 app.use('/alarm', alarmRouter);
 app.use('/alarm/setting', settingRouter);
 app.use('/member', memberRouter);
+app.use('/ino', arduinoRouter);
 
 // 처음에 / 주소, 그다음에 함수 ()
 
