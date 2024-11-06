@@ -61,12 +61,28 @@ const deleteAlarm = async (userId, pill_id) => {
     }
 }
 
+const updateAlarm = async (userId, id, pillA, pillB, pillC, pillD, alarmHour, alarmMinute, alarmName, alarmDays) => {
+    try {
+        const sql = "UPDATE alarm SET name=?, pillA = ?, pillB = ?, pillC = ?, pillD = ?, time = ?, day = ? WHERE fk_user = ? AND pill_id = ?";
+        let time = `${alarmHour}:${alarmMinute}:00`;
+        const daysString = alarmDays.join(', ');
+        const param = [alarmName, parseInt(pillA), parseInt(pillB), parseInt(pillC), parseInt(pillD), time, daysString, userId, id];
+        await db.runSql(sql, param);
+
+        return true;
+    } catch (error) {
+        console.error("Error in updateAlarm:", error.message || error);
+        throw "SQL Query Error on updateAlarm";
+    }
+}
+
 
 module.exports = {
     insertAlarm,
     getMaxPillId,
     getAlarms,
-    deleteAlarm
+    deleteAlarm,
+    updateAlarm
 };
 
 

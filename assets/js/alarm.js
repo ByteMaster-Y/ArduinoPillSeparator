@@ -3,6 +3,10 @@ let timerRef = document.querySelector(".timer-display"); // 타이머 디스플�
 const alarmNameInput = document.getElementById("alarmNameInput"); // 알람 이름 입력 필드
 const hourInput = document.getElementById("hourInput"); // 시간 입력 필드
 const minuteInput = document.getElementById("minuteInput"); // 분 입력 필드
+const pillAInput = document.getElementById("paramA"); // 약통A 입력 필드
+const pillBInput = document.getElementById("paramB"); // 약통B 입력 필드
+const pillCInput = document.getElementById("paramC"); // 약통C 입력 필드
+const pillDInput = document.getElementById("paramD"); // 약통D 입력 필드
 const selectedDaysLabel = document.getElementById("selectedDaysLabel"); // 요일 선택 라벨
 const activeAlarms = document.querySelector(".activeAlarms"); // 활성 알람 표시 구역
 const setAlarm = document.getElementById("set"); // 알람 설정 버튼
@@ -67,6 +71,10 @@ spans.forEach(async(span) => {
       alarmNameInput.value = alarm.alarmName;
       hourInput.value = alarm.alarmHour;
       minuteInput.value = alarm.alarmMinute;
+      pillAInput.value = alarm.pillA;
+      pillBInput.value = alarm.pillB;
+      pillCInput.value = alarm.pillC;
+      pillDInput.value = alarm.pillD;
       selectedDaysLabel.innerText = alarm.alarmDays;
       modalInstance.show(); // 모달 열기
       const confirmButton = modalElement.querySelector('#confirm');
@@ -119,18 +127,6 @@ const modalElement = document.getElementById('exampleModal');
 const modalInstance = new mdb.Modal(modalElement);  // 모달 인스턴스를 수동으로 초기화
 
 // 확인 버튼 이벤트 핸들러 함수
-// function confirmSpanClickHandler(dataId, span, alarm) {
-//   //alert('알람 수정이 완료되었습니다.'); // 추가 알림
-//   Swal.fire("알람 수정이 완료되었습니다.");
-//   alarm.alarmName = alarmNameInput.value;
-//   alarm.alarmHour = hourInput.value;
-//   alarm.alarmMinute = minuteInput.value;
-//   alarm.alarmDays = selectedDaysLabel.textContent.split(", ");
-//   console.log(alarm.alarmDays);
-//   modifyAlarm(span, alarm);
-//   updateAlarmById(dataId, alarm)
-//   modalInstance.hide();  // 모달 닫기
-// }
 function confirmSpanClickHandler(dataId, span, alarm) {
   Swal.fire({
     title: "알람을 수정하시겠습니까?",
@@ -144,6 +140,10 @@ function confirmSpanClickHandler(dataId, span, alarm) {
       alarm.alarmName = alarmNameInput.value;
       alarm.alarmHour = hourInput.value;
       alarm.alarmMinute = minuteInput.value;
+      alarm.pillA = pillAInput.value;
+      alarm.pillB = pillBInput.value;
+      alarm.pillC = pillCInput.value;
+      alarm.pillD = pillDInput.value;
       alarm.alarmDays = selectedDaysLabel.textContent.split(", ");
       
       modifyAlarm(span, alarm);
@@ -168,28 +168,6 @@ function confirmAddClickHandler() {
 let handleConfirmClick;
 
 // 알람의 개수 최대 4개 까지만
-
-// setAlarm.addEventListener('click', () => {
-//   modalInstance.show(); // 모달 열기
-//   alarmNameInput.value = ''; // 입력 필드 초기화
-//   hourInput.value = ''; // 입력 필드 초기화
-//   minuteInput.value = ''; // 입력 필드 초기화
-//   selectedDaysLabel.innerText = ''; // 입력 필드 초기화
-//   // 요일 선택 초기화
-//   document.querySelectorAll('.day-option').forEach(option => {
-//     option.checked = false;
-//   });
-
-//   // 기존의 확인 버튼 이벤트 리스너 제거
-//   const confirmButton = modalElement.querySelector('#confirm');
-//   confirmButton.removeEventListener('click', confirmAddClickHandler);
-//   confirmButton.removeEventListener('click', handleConfirmClick);
-
-//   // 새로운 확인 버튼 이벤트 추가
-//   confirmButton.addEventListener('click', confirmAddClickHandler);
-// });
-
-
 setAlarm.addEventListener('click', () => {
   // 활성 알람 개수 확인
   if (alarmsArray.length >= 4) {
@@ -207,6 +185,10 @@ setAlarm.addEventListener('click', () => {
   alarmNameInput.value = '';
   hourInput.value = '';
   minuteInput.value = '';
+  pillAInput.value = '';
+  pillBInput.value = '';
+  pillCInput.value = '';
+  pillDInput.value = '';
   selectedDaysLabel.innerText = '';
 
   // 요일 선택 초기화
@@ -439,10 +421,10 @@ const setAlarmFunction = async() => {
     alert("알람 이름을 입력하세요."); // 유효성 검사
     return;
   }
-  const pillA = document.getElementById('paramA').value || 0;
-  const pillB = document.getElementById('paramB').value || 0;
-  const pillC = document.getElementById('paramC').value || 0;
-  const pillD = document.getElementById('paramD').value || 0;
+  const pillA = pillAInput.value || 0;
+  const pillB = pillBInput.value || 0;
+  const pillC = pillCInput.value || 0;
+  const pillD = pillDInput.value || 0;
   
   console.log("a=",pillA," b=",pillB," C=",pillC," D=",pillD);
 
@@ -487,6 +469,12 @@ const getAlarmById = (id) => {
   const alarm = alarmsArray.find(alarm => alarm.id == id);
   if (alarm) {
     return {
+      userId: alarm.userId,
+      id: alarm.id,
+      pillA: alarm.pillA,
+      pillB: alarm.pillB,
+      pillC: alarm.pillC,
+      pillD: alarm.pillD,
       alarmName: alarm.alarmName,
       alarmHour: alarm.alarmHour,
       alarmMinute: alarm.alarmMinute,
@@ -497,10 +485,38 @@ const getAlarmById = (id) => {
   }
 };
 
-const updateAlarmById = (id, updatedAlarm) => {
+const updateAlarmById = async(id, updatedAlarm) => {
   const alarmIndex = alarmsArray.findIndex(alarm => alarm.id == id);
 
   if (alarmIndex !== -1) {
+    try {
+      const response = await fetch('/alarm/updateAlarm', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          userId: updatedAlarm.userId, 
+          id: updatedAlarm.id, 
+          pillA: updatedAlarm.pillA, 
+          pillB: updatedAlarm.pillB, 
+          pillC: updatedAlarm.pillC, 
+          pillD: updatedAlarm.pillD, 
+          alarmHour: updatedAlarm.alarmHour, 
+          alarmMinute: updatedAlarm.alarmMinute, 
+          alarmName: updatedAlarm.alarmName, 
+          alarmDays: updatedAlarm.alarmDays
+        })
+      });
+      const result = await response.json();
+      if (result.success) {
+        console.log("알람이 성공적으로 추가되었습니다:", result.result);
+      } else {
+        console.error("알람 추가 실패:", result.message);
+      }
+    } catch (error) {
+      console.error("네트워크 오류:", error);
+    }
     // 알람이 존재하는 경우, 수정된 값을 업데이트
     alarmsArray[alarmIndex] = {
       ...alarmsArray[alarmIndex],

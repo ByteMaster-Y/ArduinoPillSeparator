@@ -56,17 +56,6 @@ const getAlarms = async(req, res) => {
     }
 };
 
-// const deleteAlarm = async (req, res) => {
-//     try {
-//         const { userId, id } = req.body; // 클라이언트에서 전송한 userId와 pill_id
-//         await model.deleteAlarm(userId, id); // 모델에서 삭제 함수 호출
-//         res.json({ success: true });
-//     } catch (error) {
-//         console.error("Error in deleteAlarm:", error);
-//         res.status(500).json({ success: false, message: error });
-//     }
-// };
-
 const deleteAlarm = async (req, res) => {
     try {
         const { userId, alarmId } = req.body;
@@ -86,11 +75,29 @@ const deleteAlarm = async (req, res) => {
     }
 };
 
+const updateAlarm = async (req, res) => {
+    try {
+        const { userId, id, pillA, pillB, pillC, pillD, alarmHour, alarmMinute, alarmName, alarmDays } = req.body;
+        
+        const result = await model.updateAlarm(userId, id, pillA, pillB, pillC, pillD, alarmHour, alarmMinute, alarmName, alarmDays);
+        
+        // 성공적으로 삭제된 경우
+        if (result) {
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ success: false, message: "알람을 찾을 수 없습니다." });
+        }
+    } catch (error) {
+        console.error("Error in updateAlarm:", error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 
 module.exports = {
     alarm,
     insertAlarm,
     getMaxPillId,
     getAlarms,
-    deleteAlarm
+    deleteAlarm,
+    updateAlarm
 };

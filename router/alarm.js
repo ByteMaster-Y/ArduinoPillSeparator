@@ -7,5 +7,6 @@ router.post('/insertAlarm', controller.insertAlarm);
 router.post('/getMaxPillId', controller.getMaxPillId);
 router.post('/getAlarms', controller.getAlarms);
 router.post('/deleteAlarm', controller.deleteAlarm);
+router.post('/updateAlarm', controller.updateAlarm);
 
 module.exports = router;
