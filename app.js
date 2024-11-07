@@ -49,7 +49,7 @@ arduinoRouter = require('./router/arduino');
 
 app.use('/', indexRouter);
 app.use('/alarm', alarmRouter);
-app.use('/alarm/setting', settingRouter);
+app.use('/setting', settingRouter);
 app.use('/member', memberRouter);
 app.use('/ino', arduinoRouter);
 
