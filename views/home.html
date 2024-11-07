@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -19,19 +20,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="/assets/css/buttonChange.css">
     <style>
-    #container {
+        #container {
             display: flex;
-            flex-direction: column; /* 수직으로 정렬 */
-            align-items: center; /* 수평 중앙 정렬 */
-            justify-content: center; /* 수직 중앙 정렬 */
+            flex-direction: column;
+            /* 수직으로 정렬 */
+            align-items: center;
+            /* 수평 중앙 정렬 */
+            justify-content: center;
+            /* 수직 중앙 정렬 */
             height: 100vh;
         }
+
         .card__figure {
             display: flex;
             justify-content: center;
         }
+
         .learn-more {
-            margin-top: 20px; /* 버튼과 이미지 사이 간격 조정 */
+            margin-top: 20px;
+            /* 버튼과 이미지 사이 간격 조정 */
         }
     </style>
 </head>
@@ -39,26 +46,28 @@
 <body>
     <div id="container">
         <figure class="card__figure">
-			<img class="card__image" src="/assets/img/pill.png" alt="">
-			<figcaption>
-				<span class="visually-hidden">
-					Avatar photo
-				</span>
-			</figcaption>
-		</figure>
-        <button class="learn-more" onclick="location.href='/member/login'" >
+            <!-- <img class="card__image" src="/assets/img/main.png" alt=""> -->
+            <img class="card__image" src="/assets/img/main.png" alt="" style="width: 210px;">
+
+            <figcaption>
+                <span class="visually-hidden">
+                    Avatar photo
+                </span>
+            </figcaption>
+        </figure>
+        <button class="learn-more" onclick="location.href='/member/login'">
             <span class="circle" aria-hidden="true">
-            <span class="icon arrow"></span>
+                <span class="icon arrow"></span>
             </span>
             <span class="button-text">지금 시작하기</span><br><br>
-            
+
         </button>
 
         <span class="start" aria-hidden="true">
-            <span style="color: black; font-size: 13px;">아직 회원이 아니라면?</span> 
+            <span style="color: black; font-size: 13px;">아직 회원이 아니라면?</span>
             <a href="/member/signup" class="button-text" style="color: white; font-size: 13px;">회원가입</a><br>
         </span>
-            
+
 
     </div>
     <!-- Footer -->
@@ -70,4 +79,5 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js'></script>
     <script src="/assets/js/button.js"></script>
 </body>
+
 </html>

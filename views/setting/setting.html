@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Pharmacy Tour Team</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css" />
+    <!--css모음-->
+    <link rel="stylesheet" href="/assets/css/mdb.min.css" />
+    <!--StartButtonCSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700&amp;display=swap'>
+    <link rel="stylesheet" href="/assets/buttonStyle.css">
+    <!--세팅화면 CSS-->
+    <link rel="stylesheet" href="/assets/css/setting.css" />
+    <link rel="stylesheet" href="/assets/css/modal.css" />
+    <style>
+        .modal-footer .btn {
+            font-size: 14px;
+            /* 버튼 글자 크기 */
+            padding: 5px 10px;
+            /* 버튼 크기 조정 */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- 약통이름 설정 연결 설정 버튼 -->
+        <button type="button" id="setting1" class="btn btn-primary" data-mdb-toggle="modal"
+            data-mdb-target="#exampleModal">
+            약통 이름 설정
+        </button>
+
+
+        <!-- 와이파이 연결 설정 버튼 -->
+        <button type="button" id="setting2" class="btn btn-secondary" data-mdb-toggle="modal"
+            data-mdb-target="#wifiModal">
+            와이파이 연결 설정
+        </button>
+
+        <!-- 약통 이름 설정 모달 -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title text-center" id="exampleModalLabel">약통 이름 설정</h3>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- A to D Input Fields -->
+                        <div class="form-group row mb-3">
+                            <label for="paramA"
+                                class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>A</strong></label>
+                            <div class="col-sm-8">
+                                <input type="text" id="paramA" class="form-control" placeholder="약A이름 설정" />
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="paramB"
+                                class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>B</strong></label>
+                            <div class="col-sm-8">
+                                <input type="text" id="paramB" class="form-control" placeholder="약B이름 설정" />
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="paramC"
+                                class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>C</strong></label>
+                            <div class="col-sm-8">
+                                <input type="text" id="paramC" class="form-control" placeholder="약C이름 설정" />
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label for="paramD"
+                                class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>D</strong></label>
+                            <div class="col-sm-8">
+                                <input type="text" id="paramD" class="form-control" placeholder="약D이름 설정" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center w-100">
+                        <button type="button" class="btn btn-secondary btn-sm" data-mdb-dismiss="modal"
+                            style="width: 20%;">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm" style="width: 20%;">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 와이파이 연결 설정 모달 -->
+        <div class="modal fade" id="wifiModal" tabindex="-1" aria-labelledby="wifiModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title text-center" id="wifiModalLabel">와이파이 연결 설정</h3>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 상자 테두리와 이미지 -->
+                        <div class="wifi-box"
+                            style="border: 2px solid #007bff; border-radius: 8px; padding: 20px; text-align: center;">
+                            <h3 class="modal-title text-center" id="wifiModalLabel">와이파이 연결 중</h3>
+                            <img src="/assets/img/wifi.gif" style="max-width: 25%; height: auto; border-radius: 8px;">
+                            <!-- 이미지 예시: 위에 와이파이 이미지가 들어간다고 가정 -->
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary btn-sm"
+                            style="width: 35%; height: 50px; font-size: 18px; padding: 10px 20px;">
+                            와이파이 연결
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Footer -->
+    <footer class="bg-light text-lg-start">
+    </footer>
+
+    <!--Scrpit-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r79/three.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js'></script>
+    <script src="/assets/js/button.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.js"></script>
+
+
+</body>
+
+</html>
