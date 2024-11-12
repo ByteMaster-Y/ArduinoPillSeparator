@@ -63,7 +63,7 @@ Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알�
 팀원-https://github.com/KDH0908 </br>
 조장-https://github.com/ByteMaster-Y</br>
 팀원-https://github.com/latteroong</br>
-팀원-
+팀원-https://github.com/ljhjane
 
 
 ## WBS(업무분담일지)
