@@ -1,3 +1,9 @@
+-- 기존 테이블 삭제
+drop table if exists member;
+drop table if exists alarm;
+drop table if exists pill_container;
+
+
 drop table if exists member;
 create table member (
 	pkid int primary key auto_increment,
@@ -23,14 +29,14 @@ create table alarm (
 );
 
 -- 약통 이름을 설정하는 테이블 생성
-drop table if exists pill_container;
+-- 약통 정보 테이블 (약통 이름 및 사출구 이름 설정)
 create table pill_container (
-    pkid int primary key auto_increment,         -- 약통에 대한 고유 ID
-    fk_user int not null,                        -- 사용자 ID (member 테이블과 연결)
-    pillA varchar(20) not null,                          -- 약통 A의 약물 정보
-    pillB varchar(20) not null,                          -- 약통 B의 약물 정보
-    pillC varchar(20) not null,                          -- 약통 C의 약물 정보
-    pillD varchar(20) not null,                          -- 약통 D의 약물 정보
+    pkid int primary key auto_increment,     -- 약통에 대한 고유 ID
+    fk_user int not null,                    -- 사용자 ID (member 테이블과 연결)
+    pillA_name varchar(50) not null,         -- 사출구 A 이름 (예: 'A 사출구')
+    pillB_name varchar(50) not null,         -- 사출구 B 이름 (예: 'B 사출구')
+    pillC_name varchar(50) not null,         -- 사출구 C 이름 (예: 'C 사출구')
+    pillD_name varchar(50) not null,         -- 사출구 D 이름 (예: 'D 사출구')
     foreign key (fk_user) references member(pkid)   -- 사용자와 연결
 );
 
@@ -44,7 +50,9 @@ select fk_user, pill_id, name, pillA, pillB, pillC, pillD, time, day from alarm 
 
 
 
--- 예시 데이터 삽입
-insert into pill_container(fk_user, pillA, pillB, pillC, pillD) values  (1, '비타민C', '진통제', '항생제', '감기약');    
+-- pill_container 테이블에 약통 및 사출구 이름 삽입
+insert into pill_container(fk_user, pillA_name, pillB_name, pillC_name, pillD_name) 
+values (1, 'A 사출구', 'B 사출구', 'C 사출구', 'D 사출구');
+
 -- 삽입된 데이터 확인
 select * from pill_container;

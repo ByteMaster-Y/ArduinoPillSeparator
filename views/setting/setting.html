@@ -35,7 +35,6 @@
             약통 이름 설정
         </button>
 
-
         <!-- 와이파이 연결 설정 버튼 -->
         <button type="button" id="setting2" class="btn btn-secondary" data-mdb-toggle="modal"
             data-mdb-target="#wifiModal">
@@ -59,6 +58,7 @@
                                 <input type="text" id="paramA" class="form-control" placeholder="약A이름 설정" />
                             </div>
                         </div>
+
                         <div class="form-group row mb-3">
                             <label for="paramB"
                                 class="col-sm-4 col-form-label d-flex align-items-center justify-content-center"><strong>B</strong></label>
@@ -84,12 +84,13 @@
                     <div class="modal-footer d-flex justify-content-center w-100">
                         <button type="button" class="btn btn-secondary btn-sm" data-mdb-dismiss="modal"
                             style="width: 20%;">취소</button>
-                        <button type="button" class="btn btn-primary btn-sm" style="width: 20%;">확인</button>
+                        <!-- 확인 버튼에 id 추가 -->
+                        <button type="button" id="confirmButton" class="btn btn-primary btn-sm"
+                            style="width: 20%;">확인</button>
                     </div>
                 </div>
             </div>
         </div>
-
 
         <!-- 와이파이 연결 설정 모달 -->
         <div class="modal fade" id="wifiModal" tabindex="-1" aria-labelledby="wifiModalLabel" aria-hidden="true">
@@ -114,7 +115,6 @@
                             와이파이 연결
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -127,10 +127,52 @@
     <!--Scrpit-->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r79/three.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js'></script>
-    <script src="/assets/js/button.js"></script>
+    <!-- <script src="/assets/js/button.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.js"></script>
+    <script>
+        // 확인 버튼 클릭 시 동작하는 코드 추가
+        document.getElementById('confirmButton').addEventListener('click', function () {
+            // 약통 이름을 입력받기
+            const pillAName = document.getElementById('paramA').value;
+            const pillBName = document.getElementById('paramB').value;
+            const pillCName = document.getElementById('paramC').value;
+            const pillDName = document.getElementById('paramD').value;
 
+            // 서버에 데이터 보내기
+            fetch('/setting/updatePillNames', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    pillAName,
+                    pillBName,
+                    pillCName,
+                    pillDName,
+                })
+            })
+                .then(response => response.text())  // 응답을 JSON이 아니라 텍스트로 처리하여 확인
+                .then(data => {
+                    console.log('Server Response:', data); // 서버 응답 내용 확인
+                    try {
+                        const jsonData = JSON.parse(data);  // 응답을 JSON으로 파싱
+                        if (jsonData.success) {
+                            alert('약통 이름이 설정되었습니다.');
+                            window.location.reload();
+                        } else {
+                            alert('문제가 발생했습니다.');
+                        }
+                    } catch (error) {
+                        // console.error('JSON Parsing Error:', error);
+                        alert('서버 응답 처리 중 오류가 발생했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
 
+    </script>
 </body>
 
 </html>
