@@ -1,4 +1,4 @@
-# ArduinoPillSorter
+# ArduinoPillSeparator
 
 Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알약 배출 시간을 설정할 수 있습니다. 이 기기는 알약을 자동으로 분리하고 배출하여 복약 관리를 편리하게 도와줍니다.
 
@@ -60,6 +60,11 @@ Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알�
 
 ## 팀원 소개
 우리 프로젝트를 함께하는 팀원들을 소개합니다:
+팀원-https://github.com/KDH0908 </br>
+조장-https://github.com/ByteMaster-Y</br>
+팀원-</br>
+팀원-
+
 
 ## WBS(업무분담일지)
 https://docs.google.com/spreadsheets/d/1IyaiKiiavwlLS9CfkMccb5Tc6UsqPKQ_bup2qa2o8hY/edit?usp=sharing
