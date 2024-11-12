@@ -1,14 +1,11 @@
 const mysql = require('mysql2');
 
 const db = {
-    // host : '192.168.5.103',
-    // host : '172.31.144.1',
     host : '127.0.0.1',
     user : 'arduino',
     password : 'arduino',
     database : 'arduino',
     port: 3306
-    // port: 3307
 };
 
 const pool = mysql.createPool(db);  // 그냥 커넥션 하는거 보다 성능이슈 적음. 미리 만들어둔 커넥션 빌려주는거.(금방반환받음)
