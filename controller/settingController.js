@@ -1,10 +1,14 @@
 const common =  require('../common/common');
-const { runSql } = require('../common/db');  // DB 연결 모듈 임포트
+const db = require('../common/db');  // DB 연결 모듈 임포트
+
 const setting = ((req, res) => {
     try {
-        console.log('세팅화면에 접속됨');
-    
-        res.render('setting/setting');
+        let loginUserInfo = common.checkLogin(req, res);
+        if (loginUserInfo != null) {
+            console.log('세팅화면에 접속됨');
+        
+            res.render('setting/setting');
+        }
     } catch (error) {
         res.status(500).send("<H1>500</H1> Error" + error);
     }
@@ -23,7 +27,7 @@ const updatePillNames = async (req, res) => {
     `;
 
     try {
-        const result = await runSql(query, [pillAName, pillBName, pillCName, pillDName, userId]);
+        const result = await db.runSql(query, [pillAName, pillBName, pillCName, pillDName, userId]);
         
         if (result.affectedRows > 0) {
             return res.json({ success: true, message: '알약 이름이 성공적으로 업데이트되었습니다.' });
@@ -39,5 +43,6 @@ const updatePillNames = async (req, res) => {
 
 
 module.exports = {
-    setting, updatePillNames
+    setting,
+    updatePillNames
 };
