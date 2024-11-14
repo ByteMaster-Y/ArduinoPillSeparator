@@ -4,6 +4,8 @@
 #include <Servo.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <TimeLib.h>
+#include <TimeAlarms.h>
 
 unsigned long previousMillis = 0;  // 타이머 변수
 const long interval = 5000;  // 5초 간격
@@ -20,6 +22,8 @@ int posDegrees2 = 0;
 
 int sensor1 = D3;
 int sensor2 = D3;
+
+int pastId = -1;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
@@ -64,6 +68,10 @@ void setup() {
 }
 
 void loop() {
+  unsigned long readTime = millis()/1000;
+  int min = (readTime/60)%60;
+  int hour = (readTime/(60*60))%24;
+
   // 센서
   int sensorVal1 = digitalRead(sensor1);
   int sensorVal2 = digitalRead(sensor2);
@@ -129,9 +137,12 @@ void loop() {
         DynamicJsonDocument doc(1024);
         deserializeJson(doc, payload);
         
+        int id = doc["id"];  // JSON에서 id 값 추출
         int pillA = doc["A"];  // JSON에서 pillA 값 추출
         int pillB = doc["B"];  // JSON에서 pillB 값 추출
         String lcdPrint = doc["LCD"];  // JSON에서 pillB 값 추출
+        int alarmHour = doc["alarmHour"];  // JSON에서 alarmTime 값 추출
+        int alarmMinute = doc["alarmMinute"];  // JSON에서 alarmTime 값 추출
         // 값 출력
         Serial.print("pillA: ");
         Serial.println(pillA);
@@ -141,20 +152,23 @@ void loop() {
         Serial.println(LCD);
         
         ///
-        if (LCD.length() > 0) {
-          lcd.setCursor(0,0);
-          lcd.print(LCD);
-        }
+        if (alarmHour == hour && alarmMinute == min && pastId != id) {
+          pastId = id
+          if (LCD.length() > 0) {
+            lcd.setCursor(0,0);
+            lcd.print(LCD);
+          }
 
-        for (int i = 0, pillA, i++) {
-          servo1.write(90);
-          delay(500);
-          servo1.write(0);
-        }
-        for (int j = 0, pillB, j++) {
-          servo2.write(90);
-          delay(500);
-          servo2.write(0);
+          for (int i = 0, pillA, i++) {
+            servo1.write(90);
+            delay(500);
+            servo1.write(0);
+          }
+          for (int j = 0, pillB, j++) {
+            servo2.write(90);
+            delay(500);
+            servo2.write(0);
+          }
         }
       } else {
         Serial.println("POST 요청 실패, 에러 코드: " + String(httpResponseCode));

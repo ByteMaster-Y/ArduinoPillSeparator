@@ -1,7 +1,18 @@
 const test = async (req, res) => {
     try {
-        const espData = req.body;  // ESP32에서 전송된 JSON 데이터
-
+        const { id, pillA, pillB, pillC, pillD, LCD, alarmHour, alarmMinute, espData } = req.body;  // ESP32에서 전송된 JSON 데이터
+        req.session.alarm = {
+            id: id,
+            pillA: pillA,
+            pillB: pillB,
+            pillC: pillC,
+            pillD: pillD,
+            LCD: LCD,
+            alarmHour: alarmHour,
+            alarmMinute: alarmMinute,
+        };
+        req.session.save(function(){
+        });
         // 콘솔에 데이터 출력
         console.log('ESP32에서 수신된 데이터:', espData);
 
@@ -18,13 +29,20 @@ const test = async (req, res) => {
 
 const test2 = async (req, res) => {
     try {
-        const sensorData = {
-            temperature: 25.3,
-            humidity: 60
-          };
-          res.json(sensorData);  // JSON 형태로 데이터를 응답
+        const { pillA, pillB, pillC, pillD, LCD, alarmHour, alarmMinute } = req.session.alarm;
+        const alarmData = {
+            id: id,
+            A: pillA,
+            B: pillB,
+            C: pillC,
+            D: pillD,
+            LCD: LCD,
+            alarmHour: alarmHour,
+            alarmMinute: alarmMinute,
+        };
+        res.json(alarmData);  // JSON 형태로 데이터를 응답
     } catch (error) {
-        console.error("Error in test:", error);
+        console.error("Error in test2:", error);
         res.status(500).json({ success: false, message: error.message });
     }
 };

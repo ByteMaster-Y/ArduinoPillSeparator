@@ -265,19 +265,45 @@ function displayTimer() {
   timerRef.innerHTML = `${hours}:${minutes}:${seconds}`;
 
   // 알람 확인 및 재생
-  alarmsArray.forEach((alarm) => {
+  alarmsArray.forEach(async(alarm) => {
       if (alarm.isActive && `${alarm.alarmHour}:${alarm.alarmMinute}` === `${hours}:${minutes}`) {
-          // alert을 사용하여 알람 알림 표시
-          alarmSound.play();
-          alarmSound.loop = true;
-          // alert(`알람: ${alarm.alarmHour}:${alarm.alarmMinute} 알약 복용시간입니다!`);
-          Swal.fire({
-            title: "복용 시간입니다!",
-            text: `${alarm.alarmHour}:${alarm.alarmMinute}에 알약을 복용하세요.`,
-            icon: "warning",
-            confirmButtonText: "확인"
+        // alert을 사용하여 알람 알림 표시
+        alarmSound.play();
+        alarmSound.loop = true;
+
+        let id = alarm.id;
+        let pillA = alarm.pillA;
+        let pillB = alarm.pillB;
+        let pillC = alarm.pillC;
+        let pillD = alarm.pillD;
+        let LCD = alarm.alarmName;
+        let alarmHour = alarm.alarmHour;
+        let alarmMinute = alarm.alarmMinute;
+        try {
+          const response = await fetch('/ino/test', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id, pillA, pillB, pillC, pillD, LCD, alarmHour, alarmMinute })
+          });
+          const result = await response.json();
+          if (result.success) {
+            console.log("알람 전송 완료:", result.result);
+          } else {
+            console.error("알람 전송 실패:", result.message);
+          }
+        } catch (error) {
+          console.error("네트워크 오류:", error);
+        }
+
+        Swal.fire({
+          title: "복용 시간입니다!",
+          text: `${alarm.alarmHour}:${alarm.alarmMinute}에 알약을 복용하세요.`,
+          icon: "warning",
+          confirmButtonText: "확인"
         });
-          alarm.isActive = false; // 알람 비활성화
+        alarm.isActive = false; // 알람 비활성화
       }
   });
 }

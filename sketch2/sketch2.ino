@@ -21,6 +21,8 @@ int posDegrees4 = 0;
 int sensor3 = D3;
 int sensor4 = D3;
 
+int pastId = -1;
+
 //////////////////////////////////////////////////////////////////////////
 
 // const char* ssid = "eduroam"; //와이파이 이름
@@ -53,6 +55,10 @@ void setup() {
 }
 
 void loop() {
+  unsigned long readTime = millis()/1000;
+  int min = (readTime/60)%60;
+  int hour = (readTime/(60*60))%24;
+
   // 센서
   int sensorVal3 = digitalRead(sensor3);
   int sensorVal4 = digitalRead(sensor4);
@@ -117,24 +123,29 @@ void loop() {
         // JSON 응답 파싱
         DynamicJsonDocument doc(1024);
         deserializeJson(doc, payload);
-        
+
+        int id = doc["id"];  // JSON에서 id 값 추출
         int pillA = doc["C"];  // JSON에서 pillA 값 추출
         int pillB = doc["D"];  // JSON에서 pillB 값 추출
+        int alarmTime = doc["alarmTime"];  // JSON에서 alarmTime 값 추출
         // 값 출력
         Serial.print("pillC: ");
         Serial.println(pillC);
         Serial.print("pillD: ");
         Serial.println(pillD);
         /// 
-        for (int i = 0, pillC, i++) {
-          servo3.write(90);
-          delay(500);
-          servo3.write(0);
-        }
-        for (int j = 0, pillD, j++) {
-          servo4.write(90);
-          delay(500);
-          servo4.write(0);
+        if (alarmHour == hour && alarmMinute == min && pastId != id) {
+          pastId = id
+          for (int i = 0, pillC, i++) {
+            servo3.write(90);
+            delay(500);
+            servo3.write(0);
+          }
+          for (int j = 0, pillD, j++) {
+            servo4.write(90);
+            delay(500);
+            servo4.write(0);
+          }
         }
       } else {
         Serial.println("POST 요청 실패, 에러 코드: " + String(httpResponseCode));
