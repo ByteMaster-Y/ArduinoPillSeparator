@@ -8,20 +8,18 @@
 unsigned long previousMillis = 0;  // 타이머 변수
 const long interval = 5000;  // 5초 간격
 
-int ledPin1 = A3;
-int ledPin2 = A7;
+int ledPin3 = D2;
+int ledPin4 = A6;
 
-Servo servo1;
-Servo servo2;
-int servoMotor1 = D9;
-int servoMotor2 = D9;
-int posDegrees1 = 0;
-int posDegrees2 = 0;
+Servo servo3;
+Servo servo4;
+int servoMotor3 = D9;
+int servoMotor4 = D9;
+int posDegrees3 = 0;
+int posDegrees4 = 0;
 
-int sensor1 = D3;
-int sensor2 = D3;
-
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+int sensor3 = D3;
+int sensor4 = D3;
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -31,26 +29,16 @@ const char* serverUrl = "http://192.168.5.103:80/ino/test";  // Node.js 서버�
 // "http://<node가 실행되는 컴퓨터 IP>:<node로 열린 포트(80)>/(주소)";
 const char* serverUrl2 = "http://192.168.5.103:80/ino/test2";  // Node.js 서버의 IP와 포트를 정확히 설정
 
-
 void setup() {
   Serial.begin(9600);
   pinMode(ledPin1, OUTPUT);
   pinMode(ledPin2, OUTPUT);
   pinMode(sensor1, INPUT);
   pinMode(sensor2, INPUT);
-  servo1.attach(servoMotor1);
-  servo1.write(0);
-  servo2.attach(servoMotor2);
-  servo2.write(0);
-
-  Wire.begin(21,22); /////
-  lcd.begin(16, 2);
-  lcd.backlight();
-  lcd.setCursor(0,0);
-  lcd.print("Hello");
-
-  lcd.setCursor(0,1);
-  lcd.print("!!!!");
+  servo3.attach(servoMotor3);
+  servo3.write(0);
+  servo4.attach(servoMotor4);
+  servo4.write(0);
   /////////////////////////////////
   WiFi.disconnect(true);                  // 이전 Wi-Fi 설정 초기화
   WiFi.mode(WIFI_STA);                    // Wi-Fi를 스테이션 모드로 설정
@@ -62,24 +50,25 @@ void setup() {
   }
   Serial.println("WiFi 연결 완료!");
 }
+}
 
 void loop() {
   // 센서
-  int sensorVal1 = digitalRead(sensor1);
-  int sensorVal2 = digitalRead(sensor2);
-  if (sensorVal1 == HIGH) {
-    digitalWrite(ledPin1, HIGH);
+  int sensorVal3 = digitalRead(sensor3);
+  int sensorVal4 = digitalRead(sensor4);
+  if (sensorVal3 == HIGH) {
+    digitalWrite(ledPin3, HIGH);
   } else {
-    digitalWrite(ledPin1, LOW);
+    digitalWrite(ledPin3, LOW);
   }
-  if (sensorVal2 == HIGH) {
-    digitalWrite(ledPin2, HIGH);
+  if (sensorVal4 == HIGH) {
+    digitalWrite(ledPin4, HIGH);
   } else {
-    digitalWrite(ledPin2, LOW);
+    digitalWrite(ledPin4, LOW);
   }
 
   ///////////////////////////////////////////////////////
-
+  
   // 5초마다 POST 요청 전송
   unsigned long currentMillis = millis();
   if (currentMillis - previousMillis >= interval) {
@@ -93,7 +82,7 @@ void loop() {
       http.addHeader("Content-Type", "application/json");
 
       // JSON 형식으로 데이터 생성
-      String jsonData = "{\"sensorVal\": " + String(sensorVal1) + ", \"sensorVa2\": " + String(sensorVal2) + "}";
+      String jsonData = "{\"sensorVa3\": " + String(sensorVal3) + ", \"sensorVa4\": " + String(sensorVal4) + "}";
 
       // POST 요청 전송
       int httpResponseCode = http.POST(jsonData);
@@ -129,32 +118,23 @@ void loop() {
         DynamicJsonDocument doc(1024);
         deserializeJson(doc, payload);
         
-        int pillA = doc["A"];  // JSON에서 pillA 값 추출
-        int pillB = doc["B"];  // JSON에서 pillB 값 추출
-        String lcdPrint = doc["LCD"];  // JSON에서 pillB 값 추출
+        int pillA = doc["C"];  // JSON에서 pillA 값 추출
+        int pillB = doc["D"];  // JSON에서 pillB 값 추출
         // 값 출력
-        Serial.print("pillA: ");
-        Serial.println(pillA);
-        Serial.print("pillB: ");
-        Serial.println(pillB);
-        Serial.print("lcdPrint: ");
-        Serial.println(LCD);
-        
-        ///
-        if (LCD.length() > 0) {
-          lcd.setCursor(0,0);
-          lcd.print(LCD);
-        }
-
-        for (int i = 0, pillA, i++) {
-          servo1.write(90);
+        Serial.print("pillC: ");
+        Serial.println(pillC);
+        Serial.print("pillD: ");
+        Serial.println(pillD);
+        /// 
+        for (int i = 0, pillC, i++) {
+          servo3.write(90);
           delay(500);
-          servo1.write(0);
+          servo3.write(0);
         }
-        for (int j = 0, pillB, j++) {
-          servo2.write(90);
+        for (int j = 0, pillD, j++) {
+          servo4.write(90);
           delay(500);
-          servo2.write(0);
+          servo4.write(0);
         }
       } else {
         Serial.println("POST 요청 실패, 에러 코드: " + String(httpResponseCode));
