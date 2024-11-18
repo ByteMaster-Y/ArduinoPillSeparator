@@ -57,6 +57,18 @@ create table pill_container (
     foreign key (fk_user) references member(pkid)   -- 사용자와 연결
 );
 
+drop table if exists arduinoAlarm;
+CREATE TABLE arduinoAlarm (
+    id INT,
+    pillA INT,
+    pillB INT,
+    pillC INT,
+    pillD INT,
+    LCD VARCHAR(255),
+    alarmHour INT,
+    alarmMinute INT
+);
+
 insert into member(user_id, user_pw, name) values ('iop0512', '1234', '임예은');
 insert into alarm(fk_user, pill_id, name, pillA, pillB, pillC, pillD, time, day) values(1, 1, "알람1", 0, 0, 0, 1, "12:00:00", "월요일");
 select user_id, user_pw, name from member where user_id = 'iop0512' and user_pw = '1234';

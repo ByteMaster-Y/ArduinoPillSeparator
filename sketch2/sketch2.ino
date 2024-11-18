@@ -4,6 +4,8 @@
 #include <Servo.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 
 unsigned long previousMillis = 0;  // 타이머 변수
 const long interval = 5000;  // 5초 간격
@@ -22,14 +24,22 @@ int sensor3 = D3;
 int sensor4 = D3;
 
 int pastId = -1;
+struct AlarmData {
+  int pillA;
+  int pillB;
+  int pillC;
+  int pillD;
+  int alarmHour;
+  int alarmMinute;
+};
+AlarmData pastAlarmData = {-1, -1, -1, -1, -1, -1};  // 과거 알람 데이터 초기화
 
 //////////////////////////////////////////////////////////////////////////
 
 const char* ssid = "eduroam"; //와이파이 이름
 const char* password = ""; //와이파이 비번
-const char* serverUrl = "http://192.168.5.103:80/ino/test";  // Node.js 서버의 IP와 포트를 정확히 설정
 // "http://<node가 실행되는 컴퓨터 IP>:<node로 열린 포트(80)>/(주소)";
-const char* serverUrl2 = "http://192.168.5.103:80/ino/test2";  // Node.js 서버의 IP와 포트를 정확히 설정
+const char* serverUrl2 = "http://192.168.0.21:80/ino/test2";  // Node.js 서버의 IP와 포트를 정확히 설정
 
 void setup() {
   Serial.begin(9600);
@@ -54,11 +64,31 @@ void setup() {
 }
 }
 
-void loop() {
-  unsigned long readTime = millis()/1000;
-  int min = (readTime/60)%60;
-  int hour = (readTime/(60*60))%24;
+// LCD 출력 함수
+void displayLCD(String lcdPrint) {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(lcdPrint);
+}
 
+// 서보 모터 동작 함수
+void moveServo(Servo& servo, int pillCount) {
+  for (int i = 0; i < pillCount; i++) {
+    servo.write(90);
+    delay(500);  // 서보 모터 동작 시간
+    servo.write(0);
+    delay(500);  // 서보 모터 대기 시간
+  }
+}
+
+void loop() {
+  timeClient.update();  // 시간 동기화
+
+  // 현재 시간 가져오기
+  unsigned long epochTime = timeClient.getEpochTime();
+  int currentHour = (epochTime / 3600 + 9) % 24;
+  int currentMinute = (epochTime / 60) % 60;  // 분
+  
   // 센서
   int sensorVal3 = digitalRead(sensor3);
   int sensorVal4 = digitalRead(sensor4);
@@ -84,29 +114,6 @@ void loop() {
 
     if (WiFi.status() == WL_CONNECTED) {
       HTTPClient http;
-      http.begin(serverUrl);
-      http.addHeader("Content-Type", "application/json");
-
-      // JSON 형식으로 데이터 생성
-      String jsonData = "{\"sensorVa3\": " + String(sensorVal3) + ", \"sensorVa4\": " + String(sensorVal4) + "}";
-
-      // POST 요청 전송
-      int httpResponseCode = http.POST(jsonData);
-
-      if (httpResponseCode > 0) {
-        String response = http.getString();
-        Serial.println("서버 응답: " + response);
-      } else {
-        Serial.println("POST 요청 실패, 에러 코드: " + String(httpResponseCode));
-      }
-      
-      http.end();
-    }
-
-    //////////////////////////////////////////////////////////////////
-
-    if (WiFi.status() == WL_CONNECTED) {
-      HTTPClient http;
       http.begin(serverUrl2);  // 서버 URL 설정
       http.addHeader("Content-Type", "application/json");
 
@@ -125,25 +132,46 @@ void loop() {
         deserializeJson(doc, payload);
 
         int id = doc["id"];  // JSON에서 id 값 추출
-        int pillA = doc["C"];  // JSON에서 pillA 값 추출
-        int pillB = doc["D"];  // JSON에서 pillB 값 추출
-        int alarmTime = doc["alarmTime"];  // JSON에서 alarmTime 값 추출
+        int pillA = doc["pillA"];  // JSON에서 pillA 값 추출
+        int pillB = doc["pillB"];  // JSON에서 pillB 값 추출
+        int pillC = doc["pillC"];  // JSON에서 pillC 값 추출
+        int pillD = doc["pillD"];  // JSON에서 pillD 값 추출
+        int alarmHour = doc["alarmHour"];  // JSON에서 alarmTime 값 추출
+        int alarmMinute = doc["alarmMinute"];  // JSON에서 alarmTime 값 추출
         // 값 출력
         Serial.print("pillC: ");
         Serial.println(pillC);
         Serial.print("pillD: ");
         Serial.println(pillD);
-        /// 
-        if (alarmHour == hour && alarmMinute == min && pastId != id) {
-          for (int i = 0, pillC, i++) {
-            servo3.write(90);
-            delay(500);
-            servo3.write(0);
+         ///
+        // ID가 동일하더라도 알람 내용이 다르면 작동
+        if (id == pastId) {
+          // 알람 내용이 달라졌다면, 동작을 새로 실행
+          if (pillA != pastAlarmData.pillA || pillB != pastAlarmData.pillB || pillC != pastAlarmData.pillC || pillD != pastAlarmData.pillD || alarmHour != pastAlarmData.alarmHour || alarmMinute != pastAlarmData.alarmMinute) {
+            if (alarmHour == currentHour && alarmMinute == currentMinute) {
+              // 기존 알람 데이터를 새 데이터로 갱신
+              pastAlarmData = {pillA, pillB, pillC, pillD, alarmHour, alarmMinute};
+
+              // LCD 출력 및 서보 모터 동작
+              displayLCD(lcdPrint);
+
+              moveServo(servo3, pillC);  // pillA에 해당하는 서보 모터 동작
+              moveServo(servo4, pillD);  // pillB에 해당하는 서보 모터 동작
+            }
           }
-          for (int j = 0, pillD, j++) {
-            servo4.write(90);
-            delay(500);
-            servo4.write(0);
+        }
+        // ID가 다른 경우
+        else {
+          if (alarmHour == currentHour && alarmMinute == currentMinute) {
+            // 새 알람이므로 기존 알람 데이터를 갱신하고, 동작을 시작
+            pastId = id;
+            pastAlarmData = {pillA, pillB, pillC, pillD, alarmHour, alarmMinute};
+
+            // LCD 출력 및 서보 모터 동작
+            displayLCD(lcdPrint);
+
+            moveServo(servo3, pillC);  // pillA에 해당하는 서보 모터 동작
+            moveServo(servo4, pillD);  // pillB에 해당하는 서보 모터 동작
           }
         }
       } else {

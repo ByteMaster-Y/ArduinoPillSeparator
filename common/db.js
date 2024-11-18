@@ -5,7 +5,7 @@ const db = {
     user : 'arduino',
     password : 'arduino',
     database : 'arduino',
-    port: 3306
+    port: 3307
 };
 
 const pool = mysql.createPool(db);  // 그냥 커넥션 하는거 보다 성능이슈 적음. 미리 만들어둔 커넥션 빌려주는거.(금방반환받음)
