@@ -10,18 +10,18 @@
 unsigned long previousMillis = 0;  // 타이머 변수
 const long interval = 5000;  // 5초 간격
 
-int ledPin1 = A3;
+int ledPin1 = D2;
 int ledPin2 = A7;
 
 Servo servo1;
 Servo servo2;
 int servoMotor1 = D9;
-int servoMotor2 = D9;
+int servoMotor2 = D5;
 int posDegrees1 = 0;
 int posDegrees2 = 0;
 
-int sensor1 = D3;
-int sensor2 = D3;
+int sensor1 = D6;
+int sensor2 = A3;
 
 int pastId = -1;
 
@@ -29,11 +29,11 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 //////////////////////////////////////////////////////////////////////////
 
-// const char* ssid = "eduroam"; //와이파이 이름
-// const char* password = ""; //와이파이 비번
-const char* serverUrl = "http://192.168.5.103:80/ino/test";  // Node.js 서버의 IP와 포트를 정확히 설정
+const char* ssid = "Redmi"; //와이파이 이름
+const char* password = "12345678"; //와이파이 비번
+const char* serverUrl = "http://192.168.14.101:80/ino/test";  // Node.js 서버의 IP와 포트를 정확히 설정
 // "http://<node가 실행되는 컴퓨터 IP>:<node로 열린 포트(80)>/(주소)";
-const char* serverUrl2 = "http://192.168.5.103:80/ino/test2";  // Node.js 서버의 IP와 포트를 정확히 설정
+const char* serverUrl2 = "http://192.168.14.101:80/ino/test2";  // Node.js 서버의 IP와 포트를 정확히 설정
 
 
 void setup() {
@@ -110,7 +110,7 @@ void loop() {
         String response = http.getString();
         Serial.println("서버 응답: " + response);
       } else {
-        Serial.println("POST 요청 실패, 에러 코드: " + String(httpResponseCode));
+        Serial.println("POST1 요청 실패, 에러 코드: " + String(httpResponseCode));
       }
       
       http.end();
@@ -149,29 +149,28 @@ void loop() {
         Serial.print("pillB: ");
         Serial.println(pillB);
         Serial.print("lcdPrint: ");
-        Serial.println(LCD);
+        Serial.println(lcdPrint);
         
         ///
         if (alarmHour == hour && alarmMinute == min && pastId != id) {
-          pastId = id
-          if (LCD.length() > 0) {
+          if (lcdPrint.length() > 0) {
             lcd.setCursor(0,0);
-            lcd.print(LCD);
+            lcd.print(lcdPrint);
           }
 
-          for (int i = 0, pillA, i++) {
+          for (int i = 0; pillA; i++) {
             servo1.write(90);
             delay(500);
             servo1.write(0);
           }
-          for (int j = 0, pillB, j++) {
+          for (int j = 0; pillB; j++) {
             servo2.write(90);
             delay(500);
             servo2.write(0);
           }
         }
       } else {
-        Serial.println("POST 요청 실패, 에러 코드: " + String(httpResponseCode));
+        Serial.println("POST2 요청 실패, 에러 코드: " + String(httpResponseCode));
       }
       http.end();  // HTTP 연결 종료
     }

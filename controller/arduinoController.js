@@ -29,7 +29,7 @@ const test = async (req, res) => {
 
 const test2 = async (req, res) => {
     try {
-        const { pillA, pillB, pillC, pillD, LCD, alarmHour, alarmMinute } = req.session.alarm;
+        const { id, pillA, pillB, pillC, pillD, LCD, alarmHour, alarmMinute } = req.session.alarm;
         const alarmData = {
             id: id,
             A: pillA,
