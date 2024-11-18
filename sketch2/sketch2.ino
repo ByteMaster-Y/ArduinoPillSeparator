@@ -25,8 +25,8 @@ int pastId = -1;
 
 //////////////////////////////////////////////////////////////////////////
 
-// const char* ssid = "eduroam"; //와이파이 이름
-// const char* password = ""; //와이파이 비번
+const char* ssid = "eduroam"; //와이파이 이름
+const char* password = ""; //와이파이 비번
 const char* serverUrl = "http://192.168.5.103:80/ino/test";  // Node.js 서버의 IP와 포트를 정확히 설정
 // "http://<node가 실행되는 컴퓨터 IP>:<node로 열린 포트(80)>/(주소)";
 const char* serverUrl2 = "http://192.168.5.103:80/ino/test2";  // Node.js 서버의 IP와 포트를 정확히 설정
@@ -135,7 +135,6 @@ void loop() {
         Serial.println(pillD);
         /// 
         if (alarmHour == hour && alarmMinute == min && pastId != id) {
-          pastId = id
           for (int i = 0, pillC, i++) {
             servo3.write(90);
             delay(500);
