@@ -1,3 +1,20 @@
+-- arduino DB와 유저 생성(root)에서 실행
+-- create database arduino;
+-- create user 'arduino'@'localhost' identified by 'arduino';
+-- create user 'arduino'@'%' identified by 'arduino';
+-- grant all privileges on arduino to 'arduino'@'localhost';
+-- grant all privileges on arduino to 'arduino'@'%';
+-- FLUSH PRIVILEGES;
+
+-- sessions 테이블이 없어서 오류가 날 때 실행
+-- CREATE TABLE IF NOT EXISTS `sessions` (
+--   `session_id` varchar(128) COLLATE utf8mb4_bin NOT NULL,
+--   `expires` int(11) unsigned NOT NULL,
+--   `data` mediumtext COLLATE utf8mb4_bin,
+--   PRIMARY KEY (`session_id`)
+-- ) ENGINE=InnoDB;
+
+
 -- 기존 테이블 삭제
 drop table if exists member;
 drop table if exists alarm;
