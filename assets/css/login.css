@@ -58,7 +58,7 @@ body {
   width: 60%;
 }
 .card__image {
-  border-radius: 50%;
+  /* border-radius: 50%; */
   max-width: 100%;
 }
 .card__input {
