@@ -42,11 +42,11 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org", 0, 3600);  // NTP 서버와 UTC +1 
 
 //////////////////////////////////////////////////////////////////////////
 
-const char* ssid = "skyiptimeFC05"; //와이파이 이름
-const char* password = "skylifec05"; //와이파이 비번
+const char* ssid = "Galaxy Z Flip5 1418"; //와이파이 이름
+const char* password = "09170917"; //와이파이 비번
 const char* serverUrl = "http://192.168.0.21:80/ino/test";  // Node.js 서버의 IP와 포트를 정확히 설정
 // "http://<node가 실행되는 컴퓨터 IP>:<node로 열린 포트(80)>/(주소)";
-const char* serverUrl2 = "http://192.168.0.21:80/ino/test2";  // Node.js 서버의 IP와 포트를 정확히 설정
+const char* serverUrl2 = "http://192.168.48.251:80/ino/test2";  // Node.js 서버의 IP와 포트를 정확히 설정
 
 
 void setup() {
@@ -90,10 +90,13 @@ void displayLCD(String lcdPrint) {
 // 서보 모터 동작 함수
 void moveServo(Servo& servo, int pillCount) {
   for (int i = 0; i < pillCount; i++) {
-    servo.write(90);
-    delay(500);  // 서보 모터 동작 시간
+    // servo.write(45);
+    // delay(200);  // 서보 모터 동작 시간
+
+    servo.write(70);
+    delay(50);  // 서보 모터 동작 시간
     servo.write(0);
-    delay(500);  // 서보 모터 대기 시간
+    delay(50);  // 서보 모터 대기 시간
   }
 }
 
@@ -104,6 +107,10 @@ void loop() {
   unsigned long epochTime = timeClient.getEpochTime();
   int currentHour = (epochTime / 3600 + 9) % 24;
   int currentMinute = (epochTime / 60) % 60;  // 분
+
+  Serial.printf("%d,%d\n",currentHour, currentMinute);
+
+
   
   // 센서
   int sensorVal1 = digitalRead(sensor1);
@@ -162,7 +169,6 @@ void loop() {
         Serial.println(pillB);
         Serial.print("lcdPrint: ");
         Serial.println(lcdPrint);
-
         ///
         // ID가 동일하더라도 알람 내용이 다르면 작동
         if (id == pastId) {
