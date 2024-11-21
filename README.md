@@ -4,17 +4,6 @@ Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알�
 
 ## 시연영상
 
-<img width="649" alt="SCR-20241121-pzgw" src="https://github.com/user-attachments/assets/cbc35c54-8edf-48d2-9fb4-2411e639cced">
-<img width="653" alt="SCR-20241121-pzoa" src="https://github.com/user-attachments/assets/845b5c61-56ea-4c06-a40d-7e69c0efb5ba">
-<img width="593" alt="SCR-20241121-pzsf" src="https://github.com/user-attachments/assets/c260c8ee-ed18-4ba2-81cf-7c05e8f35bbf">
-<img width="628" alt="SCR-20241121-pzur" src="https://github.com/user-attachments/assets/650f0f65-148a-463e-b844-e7e5d60657d0">
-<img width="594" alt="SCR-20241121-pzxw" src="https://github.com/user-attachments/assets/837a8a67-3eff-4b9a-860a-fd25c865b94d">
-<img width="581" alt="SCR-20241121-pzzy" src="https://github.com/user-attachments/assets/cdf24974-c49a-4c61-bee3-8111e0cd253d">
-<img width="549" alt="SCR-20241121-qabf" src="https://github.com/user-attachments/assets/77f34c91-c434-4db6-987f-c580049eefdb">
-<img width="427" alt="SCR-20241121-qadt" src="https://github.com/user-attachments/assets/347ed068-3136-428c-a5e8-caea7191adc0">
-<img width="491" alt="SCR-20241121-qafa" src="https://github.com/user-attachments/assets/1c753a41-12f8-488b-8e94-924a94b1bf6d">
-
-
 [시연영상 링크](https://example.com)  
 
 ## 개발
