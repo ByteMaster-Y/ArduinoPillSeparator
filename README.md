@@ -61,7 +61,8 @@ Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알�
 ![Untitled diagram-2024-11-12-170617](https://github.com/user-attachments/assets/d1e089fa-0b4d-43fb-8827-fb77745c3b34)
 
 ## 컨트롤러 Class Diagram
-![Untitled diagram-2024-11-13-005939](https://github.com/user-attachments/assets/d378a96d-3251-45d2-8f44-4511e9c2948e)
+![Untitled diagram-2024-11-21-090802](https://github.com/user-attachments/assets/5bd4fbc7-34d7-4114-b5e6-9c174d0267ab)
+
 
 ## 팀원 소개
 우리 프로젝트를 함께하는 팀원들을 소개합니다:</br>
