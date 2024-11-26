@@ -2,7 +2,7 @@
 
 Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알약 배출 시간을 설정할 수 있습니다. 이 기기는 알약을 자동으로 분리하고 배출하여 복약 관리를 편리하게 도와줍니다.
 
-## 시연영상
+## 모바일 시연 이미지
 
 <img width="1440" alt="SCR-20241126-olku" src="https://github.com/user-attachments/assets/bc2fdc83-02d6-45f2-b476-06cfa7b18527">
 <img width="1440" alt="SCR-20241126-olvk" src="https://github.com/user-attachments/assets/46659630-2441-421d-8951-c2cc46528f45">
@@ -11,7 +11,7 @@ Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알�
 <img width="1440" alt="SCR-20241126-omel" src="https://github.com/user-attachments/assets/71a5e7fa-acdf-43ac-a20c-eadf714f7a51">
 
 
-## 개발
+## 개발 언어
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
   <img src="https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" style="max-height: 40px;">
