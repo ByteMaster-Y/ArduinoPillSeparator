@@ -4,7 +4,12 @@ Arduino 기반의 알약 분리기로, 사용자가 모바일 앱을 통해 알�
 
 ## 시연영상
 
-[시연영상 링크](https://example.com)  
+<img width="1440" alt="SCR-20241126-olku" src="https://github.com/user-attachments/assets/bc2fdc83-02d6-45f2-b476-06cfa7b18527">
+<img width="1440" alt="SCR-20241126-olvk" src="https://github.com/user-attachments/assets/46659630-2441-421d-8951-c2cc46528f45">
+<img width="1440" alt="SCR-20241126-olxh" src="https://github.com/user-attachments/assets/d272549b-bed6-4af7-a129-d57ea3aa8f80">
+<img width="1440" alt="SCR-20241126-omcr" src="https://github.com/user-attachments/assets/9638980b-f81e-4d61-87bc-b9f24b71a440">
+<img width="1440" alt="SCR-20241126-omel" src="https://github.com/user-attachments/assets/71a5e7fa-acdf-43ac-a20c-eadf714f7a51">
+
 
 ## 개발
 
